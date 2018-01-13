@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ApiServicesSidebarComponent } from './api-services-sidebar/api-services-sidebar.component';
 import { ApiServicesListComponent } from './api-services-list/api-services-list.component';
@@ -29,7 +30,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    LayoutModule
+    LayoutModule,
+    NgxDatatableModule
   ],
   declarations: [ApiServicesSidebarComponent, ApiServicesListComponent, EndpointsComponent, SettingsComponent]
 })

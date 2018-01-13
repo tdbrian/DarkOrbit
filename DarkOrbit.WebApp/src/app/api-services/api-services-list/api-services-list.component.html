@@ -1,4 +1,14 @@
 <app-api-services-sidebar></app-api-services-sidebar>
 
-<div class="page">
+<div class="page padded">
+  <header>
+    <h4>Api Services</h4>
+    <h1>All Services List</h1>
+  </header>
+
+  <ngx-datatable
+    [rows]="rows"
+    [columns]="columns">
+  </ngx-datatable>
+
 </div>
