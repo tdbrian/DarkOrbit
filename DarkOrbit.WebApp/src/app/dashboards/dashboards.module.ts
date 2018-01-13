@@ -7,6 +7,7 @@ import { DashboardsSidebarComponent } from './dashboards-sidebar/dashboards-side
 import { LayoutModule } from '../layout/layout.module';
 
 const routes: Routes = [
+  { path: 'dashboards', redirectTo: 'dashboards/main', pathMatch: 'full' },
   { path: 'dashboards/main', component: MainDashboardComponent }
 ];
 

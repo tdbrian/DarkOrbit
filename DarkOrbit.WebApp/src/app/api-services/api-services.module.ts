@@ -9,6 +9,7 @@ import { EndpointsComponent } from './api-service/endpoints/endpoints.component'
 import { SettingsComponent } from './api-service/settings/settings.component';
 
 const routes: Routes = [
+  { path: 'api-services', redirectTo: 'api-services/list', pathMatch: 'full' },
   {
     path: 'api-services',
     children: [

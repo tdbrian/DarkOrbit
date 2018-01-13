@@ -7,6 +7,7 @@ import { BrowserAppsListComponent } from './browser-apps-list/browser-apps-list.
 import { LayoutModule } from '../layout/layout.module';
 
 const routes: Routes = [
+  { path: 'browser-apps', redirectTo: 'browser-apps/list', pathMatch: 'full' },
   {
     path: 'browser-apps',
     children: [
