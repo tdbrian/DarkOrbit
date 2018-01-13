@@ -1,0 +1,25 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "tslint.json": true,
+    "tsconfig.json": true,
+    ".gitignore": true,
+    ".editorconfig": true,
+    "package-lock.json": true,
+    "src/tsconfig.app.json": true,
+    "src/tsconfig.spec.json": true,
+    "src/typings.d.ts": true,
+    "src/polyfills.ts": true,
+    "src/test.ts": true,
+    "src/hmr.ts": true,
+  },
+  "cSpell.words": [
+    "angularclass",
+    "codelyzer",
+    "darkorbit"
+  ]
+}

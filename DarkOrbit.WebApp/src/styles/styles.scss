@@ -1,0 +1,13 @@
+@import 'bootstrap';
+@import 'section-nav';
+@import 'variables';
+
+body {
+  background-color: #172335;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page {
+  margin-left: $main-sidebar-width + $section-nav-width;
+}

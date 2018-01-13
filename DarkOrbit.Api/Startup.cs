@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DarkOrbit.Api.Endpoints;
+using DarkOrbit.Api.MicroServices;
+using DarkOrbit.Api.Utilities.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DarkOrbit.Api
 {
@@ -24,6 +22,15 @@ namespace DarkOrbit.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "DarkOrbit", Version = "v1" });
+            });
+
+            services.AddSingleton<CustomerMongoDb>();
+            services.AddTransient<MicroServicesMongo>();
+            services.AddTransient<EndpointsMongo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +41,11 @@ namespace DarkOrbit.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DarkOrbit");
+            });
             app.UseMvc();
         }
     }

@@ -1,0 +1,36 @@
+@import '../../../styles/variables';
+
+:host {
+  width: 55px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+}
+
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 50px;
+  cursor: pointer;
+  opacity: .7;
+  color: #5f7f9e !important;
+  transition: border 400ms ease-in-out !important;
+  &:hover,&.active {
+    opacity: 1;
+    text-decoration: none;
+    border-left: solid 4px $primary-color;
+    transition: border 400ms ease-in-out !important;
+    color: white !important;
+  }
+}
+
+i {
+  font-size: 26px;
+}
