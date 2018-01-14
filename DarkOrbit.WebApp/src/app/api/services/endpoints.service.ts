@@ -22,13 +22,11 @@ export class EndpointsService extends BaseService {
   }
 
   /**
-   * @param id - undefined
    */
-  ApiEndpointsGetResponse(id?: string): Observable<HttpResponse<EndpointEntity>> {
+  ApiEndpointsGetResponse(): Observable<HttpResponse<EndpointEntity[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (id != null) __params = __params.set("id", id.toString());
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/api/Endpoints`,
@@ -43,18 +41,17 @@ export class EndpointsService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: EndpointEntity = null;
-        _body = _resp.body as EndpointEntity
-        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity>;
+        let _body: EndpointEntity[] = null;
+        _body = _resp.body as EndpointEntity[]
+        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity[]>;
       })
     );
   }
 
   /**
-   * @param id - undefined
    */
-  ApiEndpointsGet(id?: string): Observable<EndpointEntity> {
-    return this.ApiEndpointsGetResponse(id).pipe(
+  ApiEndpointsGet(): Observable<EndpointEntity[]> {
+    return this.ApiEndpointsGetResponse().pipe(
       map(_r => _r.body)
     );
   }
@@ -98,7 +95,7 @@ export class EndpointsService extends BaseService {
   /**
    * @param id - undefined
    */
-  ApiEndpointsByIdGetResponse(id: string): Observable<HttpResponse<EndpointEntity[]>> {
+  ApiEndpointsByIdGetResponse(id: string): Observable<HttpResponse<EndpointEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -117,9 +114,9 @@ export class EndpointsService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: EndpointEntity[] = null;
-        _body = _resp.body as EndpointEntity[]
-        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity[]>;
+        let _body: EndpointEntity = null;
+        _body = _resp.body as EndpointEntity
+        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity>;
       })
     );
   }
@@ -127,7 +124,7 @@ export class EndpointsService extends BaseService {
   /**
    * @param id - undefined
    */
-  ApiEndpointsByIdGet(id: string): Observable<EndpointEntity[]> {
+  ApiEndpointsByIdGet(id: string): Observable<EndpointEntity> {
     return this.ApiEndpointsByIdGetResponse(id).pipe(
       map(_r => _r.body)
     );

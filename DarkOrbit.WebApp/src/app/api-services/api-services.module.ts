@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from './api-service/api.service';
 
 import { ApiServicesSidebarComponent } from './api-services-sidebar/api-services-sidebar.component';
 import { ApiServicesListComponent } from './api-services-list/api-services-list.component';
@@ -14,6 +15,7 @@ import { ApiModule } from '../api/api.module';
 
 const routes: Routes = [
   { path: 'api-services', redirectTo: 'api-services/list', pathMatch: 'full' },
+  { path: 'api-services/:id', redirectTo: 'api-services/:id/endpoints', pathMatch: 'full' },
   {
     path: 'api-services',
     children: [
@@ -37,6 +39,9 @@ const routes: Routes = [
     ApiModule,
     LayoutModule,
     FormsModule
+  ],
+  providers: [
+    ApiService
   ],
   declarations: [
     ApiServicesSidebarComponent,

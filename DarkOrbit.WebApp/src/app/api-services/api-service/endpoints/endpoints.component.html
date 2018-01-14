@@ -1,3 +1,59 @@
-<p>
-  endpoints works!
-</p>
+<app-api-service-sidebar></app-api-service-sidebar>
+
+<div class="page padded">
+
+    <!-- Page header -->
+    <header>
+      <div>
+        <h4>{{currentService.name}} {{currentService.type}} Service</h4>
+        <h1>All Endpoints List</h1>
+      </div>
+      <div>
+        <a class="btn btn-outline-dark" routerLink="../new" *ngIf="showEndpoints()">
+          <i class="zmdi zmdi-plus-square"></i>
+          New Endpoint
+        </a>
+      </div>
+    </header>
+
+    <!-- Add first endpoint -->
+    <div class="centered">
+      <div class="page-info padded" *ngIf="showFirstInfo()">
+        <div class="text-center">
+          <h3>Looks like you don't have any endpoints yet.
+            <span class="sub">Ready to create the first one?</span>
+          </h3>
+          <a class="btn btn-primary mt-3" routerLink="../new">Create Endpoint</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endpoints table -->
+    <table class="table" *ngIf="showEndpoints()">
+      <thead>
+        <tr>
+          <th width="40">Status</th>
+          <th width="90"></th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let endpoint of endpoints">
+          <td>
+            <i class="zmdi zmdi-lock" title="Requires Authenticated User"></i>
+            <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+          </td>
+          <td>
+            <button class="btn btn-outline-dark">Open</button>
+          </td>
+          <td>{{endpoint.name}}</td>
+          <td>
+            <ng-container *ngIf="endpoint.description">{{endpoint.description}}</ng-container>
+            <ng-container class="muted-text" *ngIf="!endpoint.description">No Description</ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>

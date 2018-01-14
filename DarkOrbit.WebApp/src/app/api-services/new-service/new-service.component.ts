@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MicroServiceEntity } from '../../api/models/micro-service-entity';
 import { MicroServicesService } from '../../api/services/micro-services.service';
 
 @Component({
   selector: 'app-new-service',
-  templateUrl: './new-service.component.html',
-  styles: []
+  templateUrl: './new-service.component.html'
 })
-export class NewServiceComponent implements OnInit {
+export class NewServiceComponent {
   service = new MicroServiceEntity();
   isSaving = false;
   error: string;
   isJsonApi: boolean;
 
   constructor(private microService: MicroServicesService) { }
-
-  ngOnInit() {
-  }
 
   async createService() {
     this.isSaving = true;
