@@ -9,7 +9,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "api": "ng-swagger-gen -i http://localhost:61451/swagger/v1/swagger.json"
   },
   "private": true,
   "dependencies": {

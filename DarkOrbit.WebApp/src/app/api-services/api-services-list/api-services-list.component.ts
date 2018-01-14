@@ -12,7 +12,7 @@ export class ApiServicesListComponent implements OnInit {
       name: 'User Management',
       team: 'White',
       version: '1.0.3',
-      type: 'JSONAPI REST',
+      type: 'JSON API',
       description: 'Handles all user creation, querying, etc.'
     },
     {
@@ -20,7 +20,7 @@ export class ApiServicesListComponent implements OnInit {
       name: 'Domain Swaps',
       team: 'White',
       version: '12.2.0',
-      type: 'JSONAPI REST',
+      type: 'JSON API',
       description: 'KFC'
     },
     {
@@ -28,7 +28,7 @@ export class ApiServicesListComponent implements OnInit {
       name: 'Price List',
       team: 'White',
       version: '3.1.0',
-      type: 'JSONAPI REST',
+      type: 'JSON API',
       description: 'Burger King'
     },
   ];
