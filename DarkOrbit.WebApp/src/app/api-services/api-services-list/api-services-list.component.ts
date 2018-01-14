@@ -8,18 +8,18 @@ import { MicroServiceEntity } from '../../api/models/micro-service-entity';
 })
 export class ApiServicesListComponent implements OnInit {
   services: MicroServiceEntity[] = [];
-  isLoading: boolean;
+  isLoading = true;
   error: string;
 
   constructor(private microServicesService: MicroServicesService) { }
 
   async ngOnInit() {
-    this.isLoading = true;
     this.services = await this.microServicesService.ApiMicroServicesGet().toPromise()
       .catch((err) => this.error = err);
     this.isLoading = false;
   }
 
   getOpenLink = (id: string) => `../${id}`;
-  showServices = () => !this.isLoading && this.services != null && this.services.length > 0;
+  showServices = () => !this.isLoading  && this.services.length > 0;
+  showFirstInfo = () => !this.isLoading && this.services.length === 0;
 }

@@ -14,6 +14,17 @@
     </div>
   </header>
 
+  <div class="centered">
+    <div class="page-info padded" *ngIf="showFirstInfo()">
+      <div class="text-center">
+        <h3>Looks like you don't have any services yet.
+          <span class="sub">Ready to create the first one?</span>
+        </h3>
+        <a class="btn btn-primary mt-3" routerLink="../new">Create Service</a>
+      </div>
+    </div>
+  </div>
+
   <table class="table" *ngIf="showServices()">
     <thead>
       <tr>

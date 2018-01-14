@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { ApiServicesSidebarComponent } from './api-services-sidebar/api-services-sidebar.component';
 import { ApiServicesListComponent } from './api-services-list/api-services-list.component';
@@ -34,7 +35,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ApiModule,
-    LayoutModule
+    LayoutModule,
+    FormsModule
   ],
   declarations: [
     ApiServicesSidebarComponent,

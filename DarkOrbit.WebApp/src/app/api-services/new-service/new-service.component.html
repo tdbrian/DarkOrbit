@@ -12,7 +12,7 @@
       </div>
     </header>
 
-    <form>
+    <form (submit)="createService()">
       <fieldset>
         <div class="form-group">
           <label for="name-input">Name</label>
@@ -20,6 +20,7 @@
             name="name"
             type="text"
             class="form-control"
+            [(ngModel)]="service.name"
             placeholder="Enter name">
           <small class="form-text text-muted">
             Service name may contain spaces and should not contain 'Api' or 'Service'.
@@ -29,7 +30,8 @@
           <label for="description-input">Description</label>
           <textarea id="description-input"
             name="description"
-            class="form-control">
+            class="form-control"
+            [(ngModel)]="service.description">
           </textarea>
           <small class="form-text text-muted">
             Let other devs and users know what this service does and what it's for.
