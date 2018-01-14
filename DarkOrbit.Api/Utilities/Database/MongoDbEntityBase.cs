@@ -1,11 +1,13 @@
 ﻿using System;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DarkOrbit.Api.Utilities.Database
 {
     public abstract class MongoDbEntityBase
     {
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         public DateTime Created { get; set; }
 

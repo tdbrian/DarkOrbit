@@ -1,12 +1,11 @@
 /* tslint:disable */
-import { ObjectId } from './object-id';
 
 /**
  */
 export class EndpointEntity {
     name?: string;
     description?: string;
-    id?: ObjectId;
+    id?: string;
     created?: string;
     lastUpdated?: string;
     createdBy?: string;

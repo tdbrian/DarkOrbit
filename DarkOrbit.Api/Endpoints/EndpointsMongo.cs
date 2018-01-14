@@ -16,7 +16,7 @@ namespace DarkOrbit.Api.Endpoints
             _endpointsServicesCollection = customerMongoDb.EndpointCollection;
         }
 
-        public async Task<EndpointEntity> GetById(ObjectId id)
+        public async Task<EndpointEntity> GetById(string id)
         {
             return (await _endpointsServicesCollection.FindAsync(x => x.Deleted == false && x.Id == id)).FirstOrDefault();
         }
@@ -39,13 +39,12 @@ namespace DarkOrbit.Api.Endpoints
 
         public async Task Create(EndpointEntity endpointsService)
         {
-            endpointsService.Id = ObjectId.GenerateNewId();
             endpointsService.Created = DateTime.Now;
             endpointsService.Deleted = false;
             await _endpointsServicesCollection.InsertOneAsync(endpointsService);
         }
 
-        public async Task<UpdateResult> Remove(ObjectId id, string removedBy)
+        public async Task<UpdateResult> Remove(string id, string removedBy)
         {
             var update = new UpdateDefinitionBuilder<EndpointEntity>()
                 .Set(x => x.Deleted, true)

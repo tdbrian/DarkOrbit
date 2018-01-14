@@ -22,21 +22,13 @@ export class EndpointsService extends BaseService {
   }
 
   /**
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
+   * @param id - undefined
    */
-  ApiEndpointsGetResponse(params: EndpointsService.ApiEndpointsGetParams): Observable<HttpResponse<EndpointEntity>> {
+  ApiEndpointsGetResponse(id?: string): Observable<HttpResponse<EndpointEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.Timestamp != null) __params = __params.set("Timestamp", params.Timestamp.toString());
-    if (params.Pid != null) __params = __params.set("Pid", params.Pid.toString());
-    if (params.Machine != null) __params = __params.set("Machine", params.Machine.toString());
-    if (params.Increment != null) __params = __params.set("Increment", params.Increment.toString());
-    if (params.CreationTime != null) __params = __params.set("CreationTime", params.CreationTime.toString());
+    if (id != null) __params = __params.set("id", id.toString());
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/api/Endpoints`,
@@ -59,14 +51,10 @@ export class EndpointsService extends BaseService {
   }
 
   /**
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
+   * @param id - undefined
    */
-  ApiEndpointsGet(params: EndpointsService.ApiEndpointsGetParams): Observable<EndpointEntity> {
-    return this.ApiEndpointsGetResponse(params).pipe(
+  ApiEndpointsGet(id?: string): Observable<EndpointEntity> {
+    return this.ApiEndpointsGetResponse(id).pipe(
       map(_r => _r.body)
     );
   }
@@ -186,25 +174,15 @@ export class EndpointsService extends BaseService {
   }
   /**
    * @param id - undefined
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
    */
-  ApiEndpointsByIdDeleteResponse(params: EndpointsService.ApiEndpointsByIdDeleteParams): Observable<HttpResponse<void>> {
+  ApiEndpointsByIdDeleteResponse(id: string): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     
-    if (params.Timestamp != null) __params = __params.set("Timestamp", params.Timestamp.toString());
-    if (params.Pid != null) __params = __params.set("Pid", params.Pid.toString());
-    if (params.Machine != null) __params = __params.set("Machine", params.Machine.toString());
-    if (params.Increment != null) __params = __params.set("Increment", params.Increment.toString());
-    if (params.CreationTime != null) __params = __params.set("CreationTime", params.CreationTime.toString());
     let req = new HttpRequest<any>(
       "DELETE",
-      this.rootUrl + `/api/Endpoints/${params.id}`,
+      this.rootUrl + `/api/Endpoints/${id}`,
       __body,
       {
         headers: __headers,
@@ -225,36 +203,16 @@ export class EndpointsService extends BaseService {
 
   /**
    * @param id - undefined
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
    */
-  ApiEndpointsByIdDelete(params: EndpointsService.ApiEndpointsByIdDeleteParams): Observable<void> {
-    return this.ApiEndpointsByIdDeleteResponse(params).pipe(
+  ApiEndpointsByIdDelete(id: string): Observable<void> {
+    return this.ApiEndpointsByIdDeleteResponse(id).pipe(
       map(_r => _r.body)
     );
   }}
 
 export module EndpointsService {
-  export interface ApiEndpointsGetParams {
-    Timestamp: number;
-    Pid: number;
-    Machine: number;
-    Increment: number;
-    CreationTime: string;
-  }
   export interface ApiEndpointsByIdPutParams {
     id: string;
     entity?: EndpointEntity;
-  }
-  export interface ApiEndpointsByIdDeleteParams {
-    id: string;
-    Timestamp: number;
-    Pid: number;
-    Machine: number;
-    Increment: number;
-    CreationTime: string;
   }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 
 namespace DarkOrbit.Api.MicroServices
 {
@@ -16,15 +15,15 @@ namespace DarkOrbit.Api.MicroServices
         }
 
         [HttpGet]
-        public async Task<MicroServiceEntity> Get(ObjectId id)
-        {
-            return await _microServicesRepo.GetById(id);
-        }
-
-        [HttpGet("{id}")]
         public async Task<List<MicroServiceEntity>> Get()
         {
             return await _microServicesRepo.GetAll();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<MicroServiceEntity> Get(string id)
+        {
+            return await _microServicesRepo.GetById(id);
         }
 
         [HttpPost]
@@ -40,7 +39,7 @@ namespace DarkOrbit.Api.MicroServices
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(ObjectId id)
+        public async Task Delete(string id)
         {
             await _microServicesRepo.Remove(id, "nonamesyet");
         }

@@ -1,43 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { MicroServicesService } from '../../api/services';
+import { MicroServiceEntity } from '../../api/models/micro-service-entity';
 
 @Component({
   selector: 'app-api-services-list',
   templateUrl: './api-services-list.component.html'
 })
 export class ApiServicesListComponent implements OnInit {
+  services: MicroServiceEntity[] = [];
+  isLoading: boolean;
+  error: string;
 
-  services = [
-    {
-      id: '123',
-      name: 'User Management',
-      team: 'White',
-      version: '1.0.3',
-      type: 'JSON API',
-      description: 'Handles all user creation, querying, etc.'
-    },
-    {
-      id: '223',
-      name: 'Domain Swaps',
-      team: 'White',
-      version: '12.2.0',
-      type: 'JSON API',
-      description: 'KFC'
-    },
-    {
-      id: '323',
-      name: 'Price List',
-      team: 'White',
-      version: '3.1.0',
-      type: 'JSON API',
-      description: 'Burger King'
-    },
-  ];
+  constructor(private microServicesService: MicroServicesService) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    this.isLoading = true;
+    this.services = await this.microServicesService.ApiMicroServicesGet().toPromise()
+      .catch((err) => this.error = err);
+    this.isLoading = false;
   }
 
   getOpenLink = (id: string) => `../${id}`;
-
+  showServices = () => !this.isLoading && this.services != null && this.services.length > 0;
 }

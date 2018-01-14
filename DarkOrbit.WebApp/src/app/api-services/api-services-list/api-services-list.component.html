@@ -7,14 +7,14 @@
       <h1>All Services List</h1>
     </div>
     <div>
-      <a class="btn btn-outline-dark" routerLink="../new">
+      <a class="btn btn-outline-dark" routerLink="../new" *ngIf="showServices()">
         <i class="zmdi zmdi-plus-square"></i>
         New Service
       </a>
     </div>
   </header>
 
-  <table class="table">
+  <table class="table" *ngIf="showServices()">
     <thead>
       <tr>
         <th width="40">Status</th>

@@ -21,6 +21,7 @@ namespace DarkOrbit.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
@@ -40,6 +41,8 @@ namespace DarkOrbit.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

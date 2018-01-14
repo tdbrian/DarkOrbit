@@ -22,21 +22,11 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
    */
-  ApiMicroServicesGetResponse(params: MicroServicesService.ApiMicroServicesGetParams): Observable<HttpResponse<MicroServiceEntity>> {
+  ApiMicroServicesGetResponse(): Observable<HttpResponse<MicroServiceEntity[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.Timestamp != null) __params = __params.set("Timestamp", params.Timestamp.toString());
-    if (params.Pid != null) __params = __params.set("Pid", params.Pid.toString());
-    if (params.Machine != null) __params = __params.set("Machine", params.Machine.toString());
-    if (params.Increment != null) __params = __params.set("Increment", params.Increment.toString());
-    if (params.CreationTime != null) __params = __params.set("CreationTime", params.CreationTime.toString());
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/api/MicroServices`,
@@ -51,22 +41,17 @@ export class MicroServicesService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: MicroServiceEntity = null;
-        _body = _resp.body as MicroServiceEntity
-        return _resp.clone({body: _body}) as HttpResponse<MicroServiceEntity>;
+        let _body: MicroServiceEntity[] = null;
+        _body = _resp.body as MicroServiceEntity[]
+        return _resp.clone({body: _body}) as HttpResponse<MicroServiceEntity[]>;
       })
     );
   }
 
   /**
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
    */
-  ApiMicroServicesGet(params: MicroServicesService.ApiMicroServicesGetParams): Observable<MicroServiceEntity> {
-    return this.ApiMicroServicesGetResponse(params).pipe(
+  ApiMicroServicesGet(): Observable<MicroServiceEntity[]> {
+    return this.ApiMicroServicesGetResponse().pipe(
       map(_r => _r.body)
     );
   }
@@ -110,7 +95,7 @@ export class MicroServicesService extends BaseService {
   /**
    * @param id - undefined
    */
-  ApiMicroServicesByIdGetResponse(id: string): Observable<HttpResponse<MicroServiceEntity[]>> {
+  ApiMicroServicesByIdGetResponse(id: string): Observable<HttpResponse<MicroServiceEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -129,9 +114,9 @@ export class MicroServicesService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: MicroServiceEntity[] = null;
-        _body = _resp.body as MicroServiceEntity[]
-        return _resp.clone({body: _body}) as HttpResponse<MicroServiceEntity[]>;
+        let _body: MicroServiceEntity = null;
+        _body = _resp.body as MicroServiceEntity
+        return _resp.clone({body: _body}) as HttpResponse<MicroServiceEntity>;
       })
     );
   }
@@ -139,7 +124,7 @@ export class MicroServicesService extends BaseService {
   /**
    * @param id - undefined
    */
-  ApiMicroServicesByIdGet(id: string): Observable<MicroServiceEntity[]> {
+  ApiMicroServicesByIdGet(id: string): Observable<MicroServiceEntity> {
     return this.ApiMicroServicesByIdGetResponse(id).pipe(
       map(_r => _r.body)
     );
@@ -186,25 +171,15 @@ export class MicroServicesService extends BaseService {
   }
   /**
    * @param id - undefined
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
    */
-  ApiMicroServicesByIdDeleteResponse(params: MicroServicesService.ApiMicroServicesByIdDeleteParams): Observable<HttpResponse<void>> {
+  ApiMicroServicesByIdDeleteResponse(id: string): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     
-    if (params.Timestamp != null) __params = __params.set("Timestamp", params.Timestamp.toString());
-    if (params.Pid != null) __params = __params.set("Pid", params.Pid.toString());
-    if (params.Machine != null) __params = __params.set("Machine", params.Machine.toString());
-    if (params.Increment != null) __params = __params.set("Increment", params.Increment.toString());
-    if (params.CreationTime != null) __params = __params.set("CreationTime", params.CreationTime.toString());
     let req = new HttpRequest<any>(
       "DELETE",
-      this.rootUrl + `/api/MicroServices/${params.id}`,
+      this.rootUrl + `/api/MicroServices/${id}`,
       __body,
       {
         headers: __headers,
@@ -225,36 +200,16 @@ export class MicroServicesService extends BaseService {
 
   /**
    * @param id - undefined
-   * @param Timestamp - undefined
-   * @param Pid - undefined
-   * @param Machine - undefined
-   * @param Increment - undefined
-   * @param CreationTime - undefined
    */
-  ApiMicroServicesByIdDelete(params: MicroServicesService.ApiMicroServicesByIdDeleteParams): Observable<void> {
-    return this.ApiMicroServicesByIdDeleteResponse(params).pipe(
+  ApiMicroServicesByIdDelete(id: string): Observable<void> {
+    return this.ApiMicroServicesByIdDeleteResponse(id).pipe(
       map(_r => _r.body)
     );
   }}
 
 export module MicroServicesService {
-  export interface ApiMicroServicesGetParams {
-    Timestamp: number;
-    Pid: number;
-    Machine: number;
-    Increment: number;
-    CreationTime: string;
-  }
   export interface ApiMicroServicesByIdPutParams {
     id: string;
     entity?: MicroServiceEntity;
-  }
-  export interface ApiMicroServicesByIdDeleteParams {
-    id: string;
-    Timestamp: number;
-    Pid: number;
-    Machine: number;
-    Increment: number;
-    CreationTime: string;
   }
 }

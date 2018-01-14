@@ -9,6 +9,7 @@ import { EndpointsComponent } from './api-service/endpoints/endpoints.component'
 import { SettingsComponent } from './api-service/settings/settings.component';
 import { ApiServiceSidebarComponent } from './api-service/api-service-sidebar/api-service-sidebar.component';
 import { NewServiceComponent } from './new-service/new-service.component';
+import { ApiModule } from '../api/api.module';
 
 const routes: Routes = [
   { path: 'api-services', redirectTo: 'api-services/list', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    ApiModule,
     LayoutModule
   ],
   declarations: [

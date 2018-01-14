@@ -16,15 +16,15 @@ namespace DarkOrbit.Api.Endpoints
         }
 
         [HttpGet]
-        public async Task<EndpointEntity> Get(ObjectId id)
-        {
-            return await _endpointsRepo.GetById(id);
-        }
-
-        [HttpGet("{id}")]
         public async Task<List<EndpointEntity>> Get()
         {
             return await _endpointsRepo.GetAll();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<EndpointEntity> Get(string id)
+        {
+            return await _endpointsRepo.GetById(id);
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace DarkOrbit.Api.Endpoints
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(ObjectId id)
+        public async Task Delete(string id)
         {
             await _endpointsRepo.Remove(id, "nonamesyet");
         }

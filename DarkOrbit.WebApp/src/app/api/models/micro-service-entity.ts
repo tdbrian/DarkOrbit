@@ -1,12 +1,14 @@
 /* tslint:disable */
-import { ObjectId } from './object-id';
 
 /**
  */
 export class MicroServiceEntity {
+    id?: string;
     name?: string;
+    version?: string;
+    team?: string;
+    type?: string;
     description?: string;
-    id?: ObjectId;
     created?: string;
     lastUpdated?: string;
     createdBy?: string;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DarkOrbit.Api.Utilities.Database;
-using MongoDB.Bson;
 using MongoDB.Driver;
+using ObjectId = MongoDB.Bson.ObjectId;
 
 namespace DarkOrbit.Api.MicroServices
 {
@@ -16,7 +16,7 @@ namespace DarkOrbit.Api.MicroServices
             _microServicesCollection = customerMongoDb.MicroServicesCollection;
         }
 
-        public async Task<MicroServiceEntity> GetById(ObjectId id)
+        public async Task<MicroServiceEntity> GetById(string id)
         {
             return (await _microServicesCollection.FindAsync(x => x.Deleted == false && x.Id == id)).FirstOrDefault();
         }
@@ -39,13 +39,12 @@ namespace DarkOrbit.Api.MicroServices
 
         public async Task Create(MicroServiceEntity microService)
         {
-            microService.Id = ObjectId.GenerateNewId();
             microService.Created = DateTime.Now;
             microService.Deleted = false;
             await _microServicesCollection.InsertOneAsync(microService);
         }
 
-        public async Task<UpdateResult> Remove(ObjectId id, string removedBy)
+        public async Task<UpdateResult> Remove(string id, string removedBy)
         {
             var update = new UpdateDefinitionBuilder<MicroServiceEntity>()
                 .Set(x => x.Deleted, true)
