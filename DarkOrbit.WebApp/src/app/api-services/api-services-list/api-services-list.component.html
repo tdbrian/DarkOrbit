@@ -17,7 +17,8 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Status</th>
+        <th width="40">Status</th>
+        <th width="90"></th>
         <th>Name</th>
         <th>Type</th>
         <th>Prod Version</th>
@@ -29,6 +30,9 @@
         <td>
           <i class="zmdi zmdi-lock" title="Admin Locked"></i>
           <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+        </td>
+        <td>
+          <a class="btn btn-outline-dark" [routerLink]="getOpenLink(service.id)">Open</a>
         </td>
         <td>{{service.name}} <i class="zmdi zmdi-info" [title]="service.description"></i></td>
         <td>{{service.type}}</td>

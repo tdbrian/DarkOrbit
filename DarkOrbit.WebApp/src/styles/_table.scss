@@ -18,6 +18,12 @@
   td {
     border-top: solid 1px #303f50;
     opacity: .85;
+    vertical-align: middle;
+
+    .btn {
+      font-size: 14px;
+      color: white;
+    }
   }
 
   i {
