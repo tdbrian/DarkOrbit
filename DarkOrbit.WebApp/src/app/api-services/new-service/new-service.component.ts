@@ -11,6 +11,7 @@ export class NewServiceComponent implements OnInit {
   service = new MicroServiceEntity();
   isSaving = false;
   error: string;
+  isJsonApi: boolean;
 
   constructor(private microService: MicroServicesService) { }
 
@@ -19,9 +20,18 @@ export class NewServiceComponent implements OnInit {
 
   async createService() {
     this.isSaving = true;
+    this.setServiceType();
     const newService = {...this.service};
     await this.microService.ApiMicroServicesPost(newService).toPromise()
       .catch(err => this.error = err);
     this.isSaving = false;
+  }
+
+  private setServiceType() {
+    if (this.isJsonApi) {
+      this.service.type = 'JsonApi';
+    } else if (this.service.type == null || this.service.type.length === 0) {
+      this.service.type = 'Standard';
+    }
   }
 }

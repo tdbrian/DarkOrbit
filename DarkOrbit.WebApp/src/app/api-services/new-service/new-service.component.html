@@ -38,7 +38,7 @@
           </small>
         </div>
         <div class="form-check">
-          <input type="checkbox" name="useJsonApiSpec" class="form-check-input" id="useJsonApiSpec">
+          <input type="checkbox" name="useJsonApiSpec" class="form-check-input" id="useJsonApiSpec" [(ngModel)]="isJsonApi">
           <label class="form-check-label" for="useJsonApiSpec">Use JSON API specification
             <i class="zmdi zmdi-info text-muted" title="All data requests and response to the service will follow the JSON API specification. If this option is not selected, standard request/response types be used."></i>
           </label>

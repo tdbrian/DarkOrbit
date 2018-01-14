@@ -1,6 +1,8 @@
 <app-api-services-sidebar></app-api-services-sidebar>
 
 <div class="page padded">
+
+  <!-- Page header -->
   <header>
     <div>
       <h4>Api Services</h4>
@@ -14,6 +16,7 @@
     </div>
   </header>
 
+  <!-- Add first service -->
   <div class="centered">
     <div class="page-info padded" *ngIf="showFirstInfo()">
       <div class="text-center">
@@ -25,6 +28,7 @@
     </div>
   </div>
 
+  <!-- Services table -->
   <table class="table" *ngIf="showServices()">
     <thead>
       <tr>
@@ -45,10 +49,16 @@
         <td>
           <a class="btn btn-outline-dark" [routerLink]="getOpenLink(service.id)">Open</a>
         </td>
-        <td>{{service.name}} <i class="zmdi zmdi-info" [title]="service.description"></i></td>
+        <td>{{service.name}} <i class="zmdi zmdi-info" [title]="service.description" *ngIf="service.description"></i></td>
         <td>{{service.type}}</td>
-        <td>{{service.version}}</td>
-        <td>{{service.team}}</td>
+        <td>
+          <ng-container *ngIf="service.version">{{service.version}}</ng-container>
+          <ng-container class="muted-text" *ngIf="!service.version">Not in Prod</ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="service.team">{{service.team}}</ng-container>
+          <ng-container class="muted-text" *ngIf="!service.team">No Team(s) Assigned</ng-container>
+        </td>
       </tr>
     </tbody>
   </table>
