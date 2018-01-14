@@ -9,3 +9,12 @@ body {
   color: white;
   font-family: 'Roboto', sans-serif;
 }
+
+.btn-outline-primary,.btn-outline-dark {
+  color: white;
+  font-size: 14px;
+  i {
+    padding-right: 3px;
+    font-size: 16px;
+  }
+}

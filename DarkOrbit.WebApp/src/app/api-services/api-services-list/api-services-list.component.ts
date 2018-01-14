@@ -7,9 +7,27 @@ import { Component, OnInit } from '@angular/core';
 export class ApiServicesListComponent implements OnInit {
 
   services = [
-    { name: 'User Management', type: 'JSONAPI REST', description: 'Handles all user creation, querying, etc.' },
-    { name: 'Domain Swaps', type: 'JSONAPI REST', description: 'KFC' },
-    { name: 'Price List', type: 'JSONAPI REST', description: 'Burger King' },
+    {
+      name: 'User Management',
+      team: 'White',
+      version: '1.0.3',
+      type: 'JSONAPI REST',
+      description: 'Handles all user creation, querying, etc.'
+    },
+    {
+      name: 'Domain Swaps',
+      team: 'White',
+      version: '12.2.0',
+      type: 'JSONAPI REST',
+      description: 'KFC'
+    },
+    {
+      name: 'Price List',
+      team: 'White',
+      version: '3.1.0',
+      type: 'JSONAPI REST',
+      description: 'Burger King'
+    },
   ];
 
   constructor() { }

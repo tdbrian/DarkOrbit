@@ -1,12 +1,28 @@
 .page {
   margin-left: $main-sidebar-width + $section-nav-width;
 
-  &.padded {
+  &.padded,.padded {
     padding: 30px;
   }
 
+  &.centered {
+    display: flex;
+    justify-content: center;
+  }
+
+  .page-content {
+    width: 600px;
+    min-height: 250px;
+    background-color: #141e2d;
+    border-radius: 2px;
+    margin-top: 30px;
+  }
+
   header {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 20px;
+    justify-content: space-between;
 
     h1,h2,h3,h4 {
       font-weight: 300;
@@ -21,6 +37,25 @@
       text-transform: uppercase;
       font-size: 12px;
       font-weight: 500;
+    }
+  }
+
+  form {
+    font-size: 14px;
+
+    input,textarea,input:focus,textarea:focus {
+      background-color: #131b29;
+      border-color: #2f3c4e;
+      color: white;
+      font-size: 14px;
+    }
+
+    .btn {
+      font-size: 14px;
+    }
+
+    small {
+      font-size: 12px;
     }
   }
 }
