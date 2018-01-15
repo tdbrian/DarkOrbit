@@ -9,51 +9,101 @@
         <h1>All Endpoints List</h1>
       </div>
       <div>
-        <a class="btn btn-outline-dark" routerLink="../new" *ngIf="showEndpoints()">
+        <button class="btn btn-outline-dark"
+          (click)="startNewEndpoint()"
+          *ngIf="!firstView && formMode !== 'New'">
           <i class="zmdi zmdi-plus-square"></i>
           New Endpoint
-        </a>
+        </button>
       </div>
     </header>
 
     <!-- Add first endpoint -->
-    <div class="centered">
-      <div class="page-info padded" *ngIf="showFirstInfo()">
+    <div class="centered" *ngIf="firstView">
+      <div class="page-info padded">
         <div class="text-center">
           <h3>Looks like you don't have any endpoints yet.
             <span class="sub">Ready to create the first one?</span>
           </h3>
-          <a class="btn btn-primary mt-3" routerLink="../new">Create Endpoint</a>
+          <button class="btn btn-primary mt-3" (click)="startNewEndpoint()">Create Endpoint</button>
         </div>
       </div>
     </div>
 
-    <!-- Endpoints table -->
-    <table class="table" *ngIf="showEndpoints()">
-      <thead>
-        <tr>
-          <th width="40">Status</th>
-          <th width="90"></th>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let endpoint of endpoints">
-          <td>
-            <i class="zmdi zmdi-lock" title="Requires Authenticated User"></i>
-            <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
-          </td>
-          <td>
-            <button class="btn btn-outline-dark">Open</button>
-          </td>
-          <td>{{endpoint.name}}</td>
-          <td>
-            <ng-container *ngIf="endpoint.description">{{endpoint.description}}</ng-container>
-            <ng-container class="muted-text" *ngIf="!endpoint.description">No Description</ng-container>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row" *ngIf="!firstView">
+      <div class="col-8">
+
+        <!-- No endpoints -->
+        <div class="page-info full-width padded" *ngIf="endpoints.length === 0">
+          <div class="text-center">
+            No endpoints yet
+          </div>
+        </div>
+
+        <!-- Endpoints table -->
+        <table class="table" *ngIf="endpoints.length > 0">
+          <thead>
+            <tr>
+              <th width="40">Status</th>
+              <th width="90"></th>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let endpoint of endpoints">
+              <td>
+                <i class="zmdi zmdi-lock" title="Requires Authenticated User"></i>
+                <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+              </td>
+              <td>
+                <button class="btn btn-outline-dark">Open</button>
+              </td>
+              <td>{{endpoint.name}}</td>
+              <td>
+                <ng-container *ngIf="endpoint.description">{{endpoint.description}}</ng-container>
+                <ng-container class="muted-text" *ngIf="!endpoint.description">No Description</ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-4 page-content padded">
+
+        <div class="text-center mt-3" *ngIf="formMode === 'NotSelected'">Select endpoint to edit.</div>
+
+        <form (submit)="saveEndpoint()" *ngIf="formMode !== 'NotSelected'">
+          <h3>New Endpoint</h3>
+          <fieldset>
+            <div class="form-group">
+              <label for="name-input">Name</label>
+              <input id="name-input"
+                name="name"
+                type="text"
+                class="form-control"
+                [(ngModel)]="currentEndpoint.name"
+                placeholder="Enter name">
+              <small class="form-text text-muted">
+                Service name may contain spaces and should not contain 'Api' or 'Service'.
+              </small>
+            </div>
+            <div class="form-group">
+              <label for="description-input">Description</label>
+              <textarea id="description-input"
+                name="description"
+                class="form-control"
+                [(ngModel)]="currentEndpoint.description">
+              </textarea>
+              <small class="form-text text-muted">
+                Let other devs and users know what this service does and what it's for.
+              </small>
+            </div>
+            <button (click)="cancelNewEditEndpoint()" class="btn btn-dark mt-3">Cancel</button>
+            <button type="submit" class="btn btn-primary mt-3">Create</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
 
   </div>

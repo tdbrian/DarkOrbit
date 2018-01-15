@@ -61,12 +61,20 @@ $content-background: #141e2d;
     }
   }
 
+  .row {
+    margin-right: 0;
+  }
+
   .page-info {
     display: flex;
     width: 600px;
     background-color: $content-background;
     border-radius: 2px;
     margin-top: 30px;
+    &.full-width {
+      width: 100%;
+    }
+
     i {
       font-size: 40px;
       margin-bottom: 20px;

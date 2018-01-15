@@ -15,7 +15,7 @@ import { ApiModule } from '../api/api.module';
 
 const routes: Routes = [
   { path: 'api-services', redirectTo: 'api-services/list', pathMatch: 'full' },
-  { path: 'api-services/:id', redirectTo: 'api-services/:id/endpoints', pathMatch: 'full' },
+  // { path: 'api-services/:id', redirectTo: 'api-services/:id/endpoints', pathMatch: 'full' },
   {
     path: 'api-services',
     children: [
@@ -24,6 +24,7 @@ const routes: Routes = [
       {
         path: ':id',
         children: [
+          { path: '', redirectTo: 'endpoints', pathMatch: 'full' },
           { path: 'endpoints', component: EndpointsComponent },
           { path: 'settings', component: SettingsComponent },
         ]
