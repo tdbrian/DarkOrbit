@@ -22,6 +22,8 @@
           </div>
         </header>
 
+        <div class="loader" *ngIf="isLoading"></div>
+
         <!-- Add first endpoint -->
         <div class="text-center full-width" *ngIf="firstView && !isLoading">
           <h3>Looks like {{currentService.name}} service doesn't have any endpoints yet.
@@ -31,12 +33,12 @@
           <button class="btn btn-primary mt-3" (click)="startNewEndpoint()">Create Endpoint</button>
         </div>
 
-        <div class="text-center" *ngIf="endpoints.length === 0 && !firstView">
+        <div class="text-center" *ngIf="endpoints.length === 0 && !firstView && !isLoading">
           No endpoints yet
         </div>
 
         <!-- Endpoints table -->
-        <table class="table" *ngIf="endpoints.length > 0">
+        <table class="table" *ngIf="endpoints.length > 0 && !isLoading">
           <thead>
             <tr>
               <th width="40">Status</th>
