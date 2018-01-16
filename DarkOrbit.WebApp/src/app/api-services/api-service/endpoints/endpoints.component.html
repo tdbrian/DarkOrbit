@@ -2,42 +2,37 @@
 
 <div class="page padded">
 
-    <!-- Page header -->
-    <header>
-      <div>
-        <h4>{{currentService.name}} {{currentService.type}} Service</h4>
-        <h1>All Endpoints List</h1>
-      </div>
-      <div>
-        <button class="btn btn-outline-dark"
-          (click)="startNewEndpoint()"
-          *ngIf="!firstView && formMode !== 'New'">
-          <i class="zmdi zmdi-plus-square"></i>
-          New Endpoint
-        </button>
-      </div>
-    </header>
+  <div class="row">
+    <div [ngClass]="{ 'col-12': firstView, 'col-8': !firstView }">
 
-    <!-- Add first endpoint -->
-    <div class="centered" *ngIf="firstView">
-      <div class="page-info padded">
-        <div class="text-center">
-          <h3>Looks like you don't have any endpoints yet.
+      <!-- No endpoints -->
+      <div class="page-info full-width padded no-top-margin flex-column">
+
+        <!-- Page header -->
+        <header *ngIf="!firstView">
+          <div>
+            <h4>{{currentService.name}} {{currentService.type}} Service</h4>
+            <h1>All Endpoints List</h1>
+          </div>
+          <div>
+            <button class="btn btn-outline-dark" (click)="startNewEndpoint()" *ngIf="!firstView && formMode !== 'New'">
+              <i class="zmdi zmdi-plus-square"></i>
+              New Endpoint
+            </button>
+          </div>
+        </header>
+
+        <!-- Add first endpoint -->
+        <div class="text-center full-width" *ngIf="firstView && !isLoading">
+          <h3>Looks like {{currentService.name}} service doesn't have any endpoints yet.
+            <br>
             <span class="sub">Ready to create the first one?</span>
           </h3>
           <button class="btn btn-primary mt-3" (click)="startNewEndpoint()">Create Endpoint</button>
         </div>
-      </div>
-    </div>
 
-    <div class="row" *ngIf="!firstView">
-      <div class="col-8">
-
-        <!-- No endpoints -->
-        <div class="page-info full-width padded" *ngIf="endpoints.length === 0">
-          <div class="text-center">
-            No endpoints yet
-          </div>
+        <div class="text-center" *ngIf="endpoints.length === 0 && !firstView">
+          No endpoints yet
         </div>
 
         <!-- Endpoints table -->
@@ -48,6 +43,8 @@
               <th width="90"></th>
               <th>Name</th>
               <th>Description</th>
+              <th>Types</th>
+              <th width="50"></th>
             </tr>
           </thead>
           <tbody>
@@ -57,53 +54,94 @@
                 <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
               </td>
               <td>
-                <button class="btn btn-outline-dark">Open</button>
+                <button class="btn btn-outline-dark" (click)="selectEndpoint(endpoint)">Open</button>
               </td>
               <td>{{endpoint.name}}</td>
               <td>
                 <ng-container *ngIf="endpoint.description">{{endpoint.description}}</ng-container>
                 <ng-container class="muted-text" *ngIf="!endpoint.description">No Description</ng-container>
               </td>
+              <td>
+                <span class="badge badge-info" *ngIf="endpoint.endpointActions.includeGetOne">Get One</span>
+                <span class="badge badge-info" *ngIf="endpoint.endpointActions.includeGetMultiple">Get Multiple</span>
+                <span class="badge badge-success" *ngIf="endpoint.endpointActions.includePost">Post</span>
+                <span class="badge badge-success" *ngIf="endpoint.endpointActions.includePut">Put</span>
+                <span class="badge badge-danger" *ngIf="endpoint.endpointActions.includeDelete">Delete</span>
+              </td>
+              <td>
+                <i class="zmdi zmdi-caret-right-circle selected-row-icon" *ngIf="endpoint.id === this.currentEndpoint.id" title="Currently Selected Endpoint"></i>
+              </td>
             </tr>
           </tbody>
         </table>
-      </div>
 
-      <div class="col-4 page-content padded">
-
-        <div class="text-center mt-3" *ngIf="formMode === 'NotSelected'">Select endpoint to edit.</div>
-
-        <form (submit)="saveEndpoint()" *ngIf="formMode !== 'NotSelected'">
-          <h3>New Endpoint</h3>
-          <fieldset>
-            <div class="form-group">
-              <label for="name-input">Name</label>
-              <input id="name-input"
-                name="name"
-                type="text"
-                class="form-control"
-                [(ngModel)]="currentEndpoint.name"
-                placeholder="Enter name">
-              <small class="form-text text-muted">
-                Service name may contain spaces and should not contain 'Api' or 'Service'.
-              </small>
-            </div>
-            <div class="form-group">
-              <label for="description-input">Description</label>
-              <textarea id="description-input"
-                name="description"
-                class="form-control"
-                [(ngModel)]="currentEndpoint.description">
-              </textarea>
-              <small class="form-text text-muted">
-                Let other devs and users know what this service does and what it's for.
-              </small>
-            </div>
-            <button (click)="cancelNewEditEndpoint()" class="btn btn-dark mt-3">Cancel</button>
-            <button type="submit" class="btn btn-primary mt-3">Create</button>
-          </fieldset>
-        </form>
       </div>
     </div>
 
+    <div class="col-4 page-content padded no-top-margin" *ngIf="!firstView">
+      <div class="text-center mt-3" *ngIf="formMode === 'NotSelected'">Select endpoint to edit.</div>
+
+      <form (submit)="saveEndpoint()" *ngIf="formMode !== 'NotSelected'">
+        <h4>{{currentService.name}} {{currentService.type}} Service</h4>
+        <h3 [hidden]="formMode !== 'New'">New Endpoint</h3>
+        <h3 [hidden]="formMode !== 'Edit'">Edit Endpoint</h3>
+        <fieldset class="mt-3">
+          <div class="form-group">
+            <label for="name-input">Name</label>
+            <input id="name-input" name="name" type="text" class="form-control" [(ngModel)]="currentEndpoint.name" placeholder="Enter name">
+            <small class="form-text text-muted">
+              Endpoint name may contain spaces and should not contain 'Endpoint' or 'Route'.
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea id="description-input" name="description" class="form-control" [(ngModel)]="currentEndpoint.description">
+              </textarea>
+            <small class="form-text text-muted">
+              Let other devs and users know what this endpoint does and what it's for.
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Endpoint Types</label>
+            <div class="form-check">
+              <input name="includeGetSingle" class="form-check-input" type="checkbox" value="" id="get-one" [(ngModel)]="currentEndpoint.endpointActions.includeGetOne">
+              <label class="form-check-label" for="get-one">
+                Get Single Query
+              </label>
+            </div>
+            <div class="form-check">
+              <input name="includeGetMultiple" class="form-check-input" type="checkbox" value="" id="get-multiple" [(ngModel)]="currentEndpoint.endpointActions.includeGetMultiple">
+              <label class="form-check-label" for="get-multiple">
+                Get Multiple Query
+              </label>
+            </div>
+            <div class="form-check">
+              <input name="includePut" class="form-check-input" type="checkbox" value="" id="put" [(ngModel)]="currentEndpoint.endpointActions.includePut">
+              <label class="form-check-label" for="put">
+                Put Action
+              </label>
+            </div>
+            <div class="form-check">
+              <input name="includePost" class="form-check-input" type="checkbox" value="" id="postCheckbox" [(ngModel)]="currentEndpoint.endpointActions.includePost">
+              <label class="form-check-label" for="postCheckbox">
+                Post Action
+              </label>
+            </div>
+            <div class="form-check">
+              <input name="includeDelete" class="form-check-input" type="checkbox" value="" id="deleteCheckbox" [(ngModel)]="currentEndpoint.endpointActions.includeDelete">
+              <label class="form-check-label" for="deleteCheckbox">
+                Delete Action
+              </label>
+            </div>
+          </div>
+
+          <button [hidden]="formMode !== 'Edit'" (click)="deleteEndpoint()" class="btn btn-danger mt-3">Delete</button>
+          <button (click)="cancelNewEditEndpoint()" class="btn btn-dark mt-3">Cancel</button>
+          <button [hidden]="formMode !== 'New'" type="submit" class="btn btn-primary mt-3">Create</button>
+          <button [hidden]="formMode !== 'Edit'" type="submit" class="btn btn-primary mt-3">Save</button>
+        </fieldset>
+      </form>
+    </div>
   </div>
+
+</div>

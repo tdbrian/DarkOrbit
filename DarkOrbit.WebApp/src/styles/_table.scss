@@ -1,7 +1,5 @@
-
 .table {
   font-size: 14px;
-
   thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
@@ -10,24 +8,30 @@
     opacity: .6;
     border-bottom: 2px solid rgba(222, 226, 230, .85);
   }
-
   th {
     border-top: none;
   }
-
   td {
     border-top: solid 1px #303f50;
     opacity: .85;
     vertical-align: middle;
-
     .btn {
       font-size: 14px;
       color: white;
     }
+    .selected-row-icon {
+      padding-top: 6px;
+      font-size: 24px;
+      color: #ed1b25;
+    }
+    .badge {
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
-
   i {
     padding-left: 3px;
     font-size: 16px;
   }
 }
+

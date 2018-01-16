@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MicroServiceEntity } from '../../../api/models/micro-service-entity';
 import { EndpointEntity } from '../../../api/models/endpoint-entity';
 import { EndpointsService } from '../../../api/services/endpoints.service';
+import { EndpointActions } from '../../../api/models/endpoint-actions';
 
 export type EndpointFormModes = 'NotSelected'|'New'|'Edit';
 
@@ -16,7 +17,8 @@ export class EndpointsComponent implements OnInit {
   endpoints: EndpointEntity[] = [];
   isLoading = true;
   currentService = new MicroServiceEntity();
-  currentEndpoint = new EndpointEntity();
+  rawCurrentEndpoint: EndpointEntity;
+  currentEndpoint: EndpointEntity;
   error: string;
   formMode: EndpointFormModes = 'NotSelected';
 
@@ -25,13 +27,14 @@ export class EndpointsComponent implements OnInit {
     public endpointsService: EndpointsService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadData();
   }
 
   async loadData() {
+    this.currentEndpoint = this.generateNewEndpoint();
     this.error = null;
     const id = this.route.snapshot.params.id;
     if (!id) { this.router.navigateByUrl('../list'); }
@@ -42,38 +45,62 @@ export class EndpointsComponent implements OnInit {
   }
 
   startNewEndpoint() {
-    this.currentEndpoint = new EndpointEntity();
+    this.currentEndpoint = this.generateNewEndpoint();
     this.firstView = false;
     this.formMode = 'New';
   }
 
   selectEndpoint(endpoint) {
+    this.rawCurrentEndpoint = {...endpoint};
     this.currentEndpoint = endpoint;
     this.formMode = 'Edit';
   }
 
   cancelNewEditEndpoint() {
-    this.currentEndpoint = new EndpointEntity();
+    const currentEndpointIndex = this.endpoints.findIndex(e => e.id === this.currentEndpoint.id);
+    this.endpoints[currentEndpointIndex] = this.rawCurrentEndpoint;
+    this.currentEndpoint = this.generateNewEndpoint();
     this.formMode = 'NotSelected';
   }
 
-  saveEndpoint() {
-    if (this.formMode === 'New') { this.createEndpoint(); }
-    if (this.formMode === 'Edit') { this.updateEndpoint(); }
+  async saveEndpoint() {
+    if (this.formMode === 'New') {
+      const newEndpoint = {...this.currentEndpoint};
+      this.endpoints.push(newEndpoint);
+      this.currentEndpoint = newEndpoint;
+      await this.createEndpoint(newEndpoint);
+      this.formMode = 'Edit';
+      this.rawCurrentEndpoint =  {...newEndpoint};
+    }
+    if (this.formMode === 'Edit') {
+      this.rawCurrentEndpoint =  {...this.currentEndpoint};
+      this.updateEndpoint();
+    }
   }
 
-  createEndpoint = async () => await this.endpointsService.ApiEndpointsPost(this.currentEndpoint).toPromise();
+  createEndpoint = async (endpoint) => await this.endpointsService.ApiEndpointsPost(endpoint)
+    .toPromise()
+    .catch(err => console.error('Error creating new endpoint!!'))
 
   updateEndpoint = async () => await this.endpointsService
     .ApiEndpointsByIdPut({ entity: this.currentEndpoint, id: this.currentEndpoint.id })
     .toPromise()
+    .catch(err => console.error('Error saving endpoint!!'))
 
   async deleteEndpoint() {
-    await this.endpointsService.ApiEndpointsByIdDelete(this.currentEndpoint.id)
+    this.endpointsService.ApiEndpointsByIdDelete(this.currentEndpoint.id)
       .toPromise()
       .catch(err => this.error);
 
-    this.currentEndpoint = new EndpointEntity();
+    this.endpoints = this.endpoints.filter(e => e.id !== this.currentEndpoint.id);
+    this.currentEndpoint = this.generateNewEndpoint();
     this.formMode = 'NotSelected';
+  }
+
+  private generateNewEndpoint(): EndpointEntity {
+    const endpoint = new EndpointEntity();
+    const actions = new EndpointActions();
+    endpoint.endpointActions = actions;
+    return endpoint;
   }
 }

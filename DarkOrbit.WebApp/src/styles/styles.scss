@@ -18,3 +18,15 @@ body {
     font-size: 16px;
   }
 }
+
+input[type=checkbox] + label {
+  opacity: .7;
+
+  &:checked {
+    opacity: 1;
+  }
+}
+
+:checked + label {
+  opacity: 1;
+}
