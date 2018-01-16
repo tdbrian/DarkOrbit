@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { ApiServicesModule } from './api-services/api-services.module';
@@ -15,6 +16,7 @@ import { SettingsModule } from './settings/settings.module';
 import { SystemsManagementModule } from './systems-management/systems-management.module';
 import { TestingModule } from './testing/testing.module';
 import { UserIdentitiesModule } from './user-identities/user-identities.module';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboards/main', pathMatch: 'full' }
@@ -27,6 +29,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
     LayoutModule,
     DashboardsModule,
     ApiServicesModule,
@@ -38,7 +41,8 @@ const routes: Routes = [
     SettingsModule,
     SystemsManagementModule,
     TestingModule,
-    UserIdentitiesModule
+    UserIdentitiesModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

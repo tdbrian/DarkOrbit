@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Options } from 'angular2-notifications';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  notificationOptions: Options = {
+    timeOut: 2500,
+    preventLastDuplicates: 'visible',
+    showProgressBar: false
+  };
 }

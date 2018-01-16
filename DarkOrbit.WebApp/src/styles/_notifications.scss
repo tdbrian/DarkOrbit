@@ -1,0 +1,31 @@
+.simple-notification {
+  border-radius: 2px !important;
+}
+
+.simple-notification .sn-title {
+  line-height: 30px;
+  font-size: 17px;
+  font-weight: 300;
+}
+
+.simple-notification .sn-content {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 300;
+}
+
+.simple-notification.success {
+  background: #448a56 !important;
+}
+
+.simple-notification.error {
+  background: #a03238 !important;
+}
+
+.simple-notification.info {
+  background: #41536d !important;
+}
+
+.simple-notification.alert {
+  background: #daa019 !important;
+}

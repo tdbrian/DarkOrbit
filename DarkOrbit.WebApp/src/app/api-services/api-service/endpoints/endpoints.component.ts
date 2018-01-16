@@ -5,6 +5,7 @@ import { MicroServiceEntity } from '../../../api/models/micro-service-entity';
 import { EndpointEntity } from '../../../api/models/endpoint-entity';
 import { EndpointsService } from '../../../api/services/endpoints.service';
 import { EndpointActions } from '../../../api/models/endpoint-actions';
+import { NotificationsService } from 'angular2-notifications';
 
 export type EndpointFormModes = 'NotSelected'|'New'|'Edit';
 
@@ -26,7 +27,8 @@ export class EndpointsComponent implements OnInit {
     public apiService: ApiService,
     public endpointsService: EndpointsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notifications: NotificationsService
   ) {}
 
   ngOnInit() {
@@ -68,33 +70,41 @@ export class EndpointsComponent implements OnInit {
       const newEndpoint = {...this.currentEndpoint};
       this.endpoints.push(newEndpoint);
       this.currentEndpoint = newEndpoint;
-      await this.createEndpoint(newEndpoint);
       this.formMode = 'Edit';
       this.rawCurrentEndpoint =  {...newEndpoint};
+      await this.createEndpoint(newEndpoint);
+      this.notifications.success('Created', 'Endpoint Created');
     }
     if (this.formMode === 'Edit') {
       this.rawCurrentEndpoint =  {...this.currentEndpoint};
-      this.updateEndpoint();
+      await this.updateEndpoint();
+      this.notifications.success('Saved', `Endpoint Saved`);
     }
   }
 
   createEndpoint = async (endpoint) => await this.endpointsService.ApiEndpointsPost(endpoint)
     .toPromise()
-    .catch(err => console.error('Error creating new endpoint!!'))
+    .catch(err => console.error(this.notifications.error('Create Error', 'Error creating endpoint')))
 
   updateEndpoint = async () => await this.endpointsService
     .ApiEndpointsByIdPut({ entity: this.currentEndpoint, id: this.currentEndpoint.id })
     .toPromise()
-    .catch(err => console.error('Error saving endpoint!!'))
+    .catch(err => console.error('Save Error', 'Error saving endpoint'))
 
   async deleteEndpoint() {
-    this.endpointsService.ApiEndpointsByIdDelete(this.currentEndpoint.id)
-      .toPromise()
-      .catch(err => this.error);
-
+    let endpointToBeDeleted = this.endpoints.find(e => e.id === this.currentEndpoint.id);
+    endpointToBeDeleted = {...endpointToBeDeleted};
     this.endpoints = this.endpoints.filter(e => e.id !== this.currentEndpoint.id);
     this.currentEndpoint = this.generateNewEndpoint();
     this.formMode = 'NotSelected';
+
+    try {
+      await this.endpointsService.ApiEndpointsByIdDelete(endpointToBeDeleted.id).toPromise();
+      this.notifications.success('Deleted', `Endpoint Deleted`);
+    } catch (error) {
+      this.endpoints.push(endpointToBeDeleted);
+      this.notifications.error('Delete Error', 'Error deleting endpoint');
+    }
   }
 
   private generateNewEndpoint(): EndpointEntity {
