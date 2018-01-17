@@ -9,6 +9,8 @@ import { LayoutModule } from '../layout/layout.module';
 import { ProcessesComponent } from './processes/processes.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { ProcessComponent } from './processes/process/process.component';
+import { CommandsComponent } from './commands/commands.component';
+import { EventsComponent } from './events/events.component';
 
 const routes: Routes = [
   { path: 'business-domains', redirectTo: 'business-domains/resources', pathMatch: 'full' },
@@ -29,6 +31,20 @@ const routes: Routes = [
           { path: 'list', component: ProcessesComponent },
           { path: ':id', component: ProcessComponent }
         ]
+      },
+      {
+        path: 'commands',
+        children: [
+          { path: '', redirectTo: 'list', pathMatch: 'full' },
+          { path: 'list', component: CommandsComponent },
+        ]
+      },
+      {
+        path: 'events',
+        children: [
+          { path: '', redirectTo: 'list', pathMatch: 'full' },
+          { path: 'list', component: EventsComponent },
+        ]
       }
     ]
   }
@@ -46,7 +62,9 @@ const routes: Routes = [
     BusinessDomainsSidebarComponent,
     ProcessesComponent,
     ProcessComponent,
-    ResourcesComponent
+    ResourcesComponent,
+    CommandsComponent,
+    EventsComponent
   ]
 })
 export class BusinessDomainsModule { }

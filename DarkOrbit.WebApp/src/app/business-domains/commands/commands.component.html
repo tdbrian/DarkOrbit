@@ -1,0 +1,108 @@
+<app-business-domains-sidebar></app-business-domains-sidebar>
+
+<div class="page padded">
+
+  <div class="row">
+    <div [ngClass]="{ 'col-12': firstView, 'col-8': !firstView }">
+
+      <!-- No commands -->
+      <div class="page-info full-width padded no-top-margin flex-column">
+
+        <!-- Page header -->
+        <header *ngIf="!firstView">
+          <div>
+            <h4>Commands</h4>
+            <h1>All Commands List</h1>
+          </div>
+          <div>
+            <button class="btn btn-outline-dark" (click)="startNewCommand()" *ngIf="!firstView && formMode !== 'New'">
+              <i class="zmdi zmdi-plus-square"></i>
+              New Command
+            </button>
+          </div>
+        </header>
+
+        <div class="loader" *ngIf="isLoading"></div>
+
+        <!-- Add first command -->
+        <div class="text-center full-width" *ngIf="firstView && !isLoading">
+          <h3>Looks like there are aren't any commands yet.
+            <br>
+            <span class="sub">Ready to create the first one?</span>
+          </h3>
+          <button class="btn btn-primary mt-3" (click)="startNewCommand()">Create Command</button>
+        </div>
+
+        <div class="text-center" *ngIf="commands.length === 0 && !firstView && !isLoading">
+          No commands yet
+        </div>
+
+        <!-- Commands table -->
+        <table class="table" *ngIf="commands.length > 0 && !isLoading">
+          <thead>
+            <tr>
+              <th width="40">Status</th>
+              <th width="90"></th>
+              <th>Name</th>
+              <th>Description</th>
+              <th width="50"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let command of commands">
+              <td>
+                <i class="zmdi zmdi-lock" title="Requires Authenticated User"></i>
+                <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+              </td>
+              <td>
+                <button class="btn btn-outline-dark" (click)="selectCommand(command)">Open</button>
+              </td>
+              <td>{{command.name}}</td>
+              <td>
+                <ng-container *ngIf="command.description">{{command.description}}</ng-container>
+                <ng-container class="muted-text" *ngIf="!command.description">No Description</ng-container>
+              </td>
+              <td>
+                <i class="zmdi zmdi-caret-right-circle selected-row-icon" *ngIf="command.id === this.currentCommand.id" title="Currently Selected Command"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="col-4 page-content padded no-top-margin" *ngIf="!firstView">
+      <div class="text-center mt-3" *ngIf="formMode === 'NotSelected'">Select command to edit.</div>
+
+      <form (submit)="saveCommand()" *ngIf="formMode !== 'NotSelected'">
+        <h4>Commands</h4>
+        <h3 [hidden]="formMode !== 'New'">New Command</h3>
+        <h3 [hidden]="formMode !== 'Edit'">Edit Command</h3>
+        <fieldset class="mt-3">
+          <div class="form-group">
+            <label for="name-input">Name</label>
+            <input id="name-input" name="name" type="text" class="form-control" [(ngModel)]="currentCommand.name" placeholder="Enter name">
+            <small class="form-text text-muted">
+              Command name may contain spaces and should not contain 'Command' or 'Action'.
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea id="description-input" name="description" class="form-control" [(ngModel)]="currentCommand.description">
+                </textarea>
+            <small class="form-text text-muted">
+              Let other devs and users know what this command does and what it's for.
+            </small>
+          </div>
+
+          <button [hidden]="formMode !== 'Edit'" (click)="deleteCommand()" class="btn btn-danger mt-3">Delete</button>
+          <button (click)="cancelNewEditCommand()" class="btn btn-dark mt-3">Cancel</button>
+          <button [hidden]="formMode !== 'New'" type="submit" class="btn btn-primary mt-3">Create</button>
+          <button [hidden]="formMode !== 'Edit'" type="submit" class="btn btn-primary mt-3">Save</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+</div>

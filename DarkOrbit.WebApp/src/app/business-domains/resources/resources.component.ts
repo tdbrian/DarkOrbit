@@ -18,7 +18,6 @@ export class ResourcesComponent implements OnInit {
   isLoading = true;
   rawCurrentResource: ResourceEntity;
   currentResource: ResourceEntity;
-  error: string;
   formMode: ResourceFormModes = 'NotSelected';
 
   constructor(
@@ -35,10 +34,13 @@ export class ResourcesComponent implements OnInit {
 
   async loadData() {
     this.currentResource = this.generateNewResource();
-    this.error = null;
     const id = this.route.snapshot.params.id;
     if (!id) { this.router.navigateByUrl('/business-domains/resources/list'); }
-    this.resources = await this.resourcesService.ApiResourcesGet().toPromise().catch(err => this.error = err);
+    try {
+      this.resources = await this.resourcesService.ApiResourcesGet().toPromise();
+    } catch (error) {
+      this.notifications.error('Error', 'Unable to get resources');
+    }
     if (this.resources.length > 0) { this.firstView = false; }
     this.isLoading = false;
   }
@@ -67,26 +69,32 @@ export class ResourcesComponent implements OnInit {
       const newResource = {...this.currentResource};
       this.resources.push(newResource);
       this.currentResource = newResource;
-      this.formMode = 'Edit';
+      this.formMode = 'NotSelected';
       this.rawCurrentResource =  {...newResource};
-      await this.createResource(newResource);
-      this.notifications.success('Created', 'Resource Created');
-    }
-    if (this.formMode === 'Edit') {
+      try {
+        await this.createResource(newResource);
+        this.notifications.success('Created', 'Resource Created');
+        this.resources = await this.resourcesService.ApiResourcesGet().toPromise();
+      } catch (error) {
+        this.notifications.error('Error', 'Error creating new resource');
+      }
+    } else if (this.formMode === 'Edit') {
       this.rawCurrentResource =  {...this.currentResource};
-      await this.updateResource();
-      this.notifications.success('Saved', `Resource Saved`);
+      try {
+        await this.updateResource();
+        this.notifications.success('Saved', `Resource Saved`);
+      } catch (error) {
+        this.notifications.error('Error', 'Error saving new resource');
+      }
     }
   }
 
   createResource = async (resource) => await this.resourcesService.ApiResourcesPost(resource)
     .toPromise()
-    .catch(err => console.error(this.notifications.error('Create Error', 'Error creating resource')))
 
   updateResource = async () => await this.resourcesService
     .ApiResourcesByIdPut({ entity: this.currentResource, id: this.currentResource.id })
     .toPromise()
-    .catch(err => console.error('Save Error', 'Error saving resource'))
 
   async deleteResource() {
     let resourceToBeDeleted = this.resources.find(e => e.id === this.currentResource.id);
@@ -98,7 +106,7 @@ export class ResourcesComponent implements OnInit {
     try {
       await this.resourcesService.ApiResourcesByIdDelete(resourceToBeDeleted.id).toPromise();
       this.notifications.success('Deleted', `Resource Deleted`);
-    } catch (error) {
+    } catch (err) {
       this.resources.push(resourceToBeDeleted);
       this.notifications.error('Delete Error', 'Error deleting resource');
     }

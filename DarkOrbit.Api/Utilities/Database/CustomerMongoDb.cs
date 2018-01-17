@@ -1,4 +1,6 @@
-﻿using DarkOrbit.Api.Endpoints;
+﻿using DarkOrbit.Api.Commands;
+using DarkOrbit.Api.Endpoints;
+using DarkOrbit.Api.Events;
 using DarkOrbit.Api.MicroServices;
 using DarkOrbit.Api.Processes;
 using DarkOrbit.Api.Resources;
@@ -20,6 +22,10 @@ namespace DarkOrbit.Api.Utilities.Database
 
         public IMongoCollection<UserEntity> UsersCollection { get; set; }
 
+        public IMongoCollection<CommandEntity> CommandsCollection { get; set; }
+
+        public IMongoCollection<EventEntity> EventsCollection { get; set; }
+
         public CustomerMongoDb(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("CustomerMongoDb"));
@@ -30,6 +36,8 @@ namespace DarkOrbit.Api.Utilities.Database
             ResourcesCollection = database.GetCollection<ResourceEntity>("Resources");
             ProcessesCollection = database.GetCollection<ProcessEntity>("Processes");
             UsersCollection = database.GetCollection<UserEntity>("Users");
+            CommandsCollection = database.GetCollection<CommandEntity>("Commands");
+            EventsCollection = database.GetCollection<EventEntity>("Events");
         }
     }
 }

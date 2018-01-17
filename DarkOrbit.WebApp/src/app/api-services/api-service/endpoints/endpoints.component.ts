@@ -40,8 +40,12 @@ export class EndpointsComponent implements OnInit {
     this.error = null;
     const id = this.route.snapshot.params.id;
     if (!id) { this.router.navigateByUrl('../list'); }
-    this.currentService = await this.apiService.getCurrentService(id).catch(err => this.error = err);
-    this.endpoints = await this.endpointsService.ApiEndpointsGet().toPromise().catch(err => this.error = err);
+    try {
+      this.currentService = await this.apiService.getCurrentService(id);
+      this.endpoints = await this.endpointsService.ApiEndpointsGet().toPromise();
+    } catch (error) {
+      this.notifications.error('Error', 'Unable initial endpoints information');
+    }
     if (this.endpoints.length > 0) { this.firstView = false; }
     this.isLoading = false;
   }
@@ -70,26 +74,33 @@ export class EndpointsComponent implements OnInit {
       const newEndpoint = {...this.currentEndpoint};
       this.endpoints.push(newEndpoint);
       this.currentEndpoint = newEndpoint;
-      this.formMode = 'Edit';
+      this.formMode = 'NotSelected';
       this.rawCurrentEndpoint =  {...newEndpoint};
-      await this.createEndpoint(newEndpoint);
-      this.notifications.success('Created', 'Endpoint Created');
+      try {
+        await this.createEndpoint(newEndpoint);
+        this.notifications.success('Created', 'Endpoint Created');
+        this.endpoints = await this.endpointsService.ApiEndpointsGet().toPromise();
+      } catch (error) {
+        this.notifications.error('Error', 'Error creating new endpoint');
+      }
     }
     if (this.formMode === 'Edit') {
       this.rawCurrentEndpoint =  {...this.currentEndpoint};
-      await this.updateEndpoint();
-      this.notifications.success('Saved', `Endpoint Saved`);
+      try {
+        await this.updateEndpoint();
+        this.notifications.success('Saved', `Endpoint Saved`);
+      } catch (error) {
+        this.notifications.error('Error', 'Error saving new endpoint');
+      }
     }
   }
 
   createEndpoint = async (endpoint) => await this.endpointsService.ApiEndpointsPost(endpoint)
     .toPromise()
-    .catch(err => console.error(this.notifications.error('Create Error', 'Error creating endpoint')))
 
   updateEndpoint = async () => await this.endpointsService
     .ApiEndpointsByIdPut({ entity: this.currentEndpoint, id: this.currentEndpoint.id })
     .toPromise()
-    .catch(err => console.error('Save Error', 'Error saving endpoint'))
 
   async deleteEndpoint() {
     let endpointToBeDeleted = this.endpoints.find(e => e.id === this.currentEndpoint.id);

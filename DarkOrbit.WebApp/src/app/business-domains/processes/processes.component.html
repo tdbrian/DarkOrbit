@@ -1,1 +1,108 @@
 <app-business-domains-sidebar></app-business-domains-sidebar>
+
+<div class="page padded">
+
+  <div class="row">
+    <div [ngClass]="{ 'col-12': firstView, 'col-8': !firstView }">
+
+      <!-- No processes -->
+      <div class="page-info full-width padded no-top-margin flex-column">
+
+        <!-- Page header -->
+        <header *ngIf="!firstView">
+          <div>
+            <h4>Processs</h4>
+            <h1>All Processs List</h1>
+          </div>
+          <div>
+            <button class="btn btn-outline-dark" (click)="startNewProcess()" *ngIf="!firstView && formMode !== 'New'">
+              <i class="zmdi zmdi-plus-square"></i>
+              New Process
+            </button>
+          </div>
+        </header>
+
+        <div class="loader" *ngIf="isLoading"></div>
+
+        <!-- Add first process -->
+        <div class="text-center full-width" *ngIf="firstView && !isLoading">
+          <h3>Looks like there are aren't any processes yet.
+            <br>
+            <span class="sub">Ready to create the first one?</span>
+          </h3>
+          <button class="btn btn-primary mt-3" (click)="startNewProcess()">Create Process</button>
+        </div>
+
+        <div class="text-center" *ngIf="processes.length === 0 && !firstView && !isLoading">
+          No processes yet
+        </div>
+
+        <!-- Processs table -->
+        <table class="table" *ngIf="processes.length > 0 && !isLoading">
+          <thead>
+            <tr>
+              <th width="40">Status</th>
+              <th width="90"></th>
+              <th>Name</th>
+              <th>Description</th>
+              <th width="50"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let process of processes">
+              <td>
+                <i class="zmdi zmdi-lock" title="Requires Authenticated User"></i>
+                <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+              </td>
+              <td>
+                <button class="btn btn-outline-dark" (click)="selectProcess(process)">Open</button>
+              </td>
+              <td>{{process.name}}</td>
+              <td>
+                <ng-container *ngIf="process.description">{{process.description}}</ng-container>
+                <ng-container class="muted-text" *ngIf="!process.description">No Description</ng-container>
+              </td>
+              <td>
+                <i class="zmdi zmdi-caret-right-circle selected-row-icon" *ngIf="process.id === this.currentProcess.id" title="Currently Selected Process"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="col-4 page-content padded no-top-margin" *ngIf="!firstView">
+      <div class="text-center mt-3" *ngIf="formMode === 'NotSelected'">Select process to edit.</div>
+
+      <form (submit)="saveProcess()" *ngIf="formMode !== 'NotSelected'">
+        <h4>Processs</h4>
+        <h3 [hidden]="formMode !== 'New'">New Process</h3>
+        <h3 [hidden]="formMode !== 'Edit'">Edit Process</h3>
+        <fieldset class="mt-3">
+          <div class="form-group">
+            <label for="name-input">Name</label>
+            <input id="name-input" name="name" type="text" class="form-control" [(ngModel)]="currentProcess.name" placeholder="Enter name">
+            <small class="form-text text-muted">
+              Process name may contain spaces and should not contain 'Process'.
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea id="description-input" name="description" class="form-control" [(ngModel)]="currentProcess.description">
+                </textarea>
+            <small class="form-text text-muted">
+              Let other devs and users know what this process does and what it's for.
+            </small>
+          </div>
+
+          <button [hidden]="formMode !== 'Edit'" (click)="deleteProcess()" class="btn btn-danger mt-3">Delete</button>
+          <button (click)="cancelNewEditProcess()" class="btn btn-dark mt-3">Cancel</button>
+          <button [hidden]="formMode !== 'New'" type="submit" class="btn btn-primary mt-3">Create</button>
+          <button [hidden]="formMode !== 'Edit'" type="submit" class="btn btn-primary mt-3">Save</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+</div>
