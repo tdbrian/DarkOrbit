@@ -11,7 +11,6 @@ import { filter } from 'rxjs/operators/filter';
 
 import { MicroServiceEntity } from '../models/micro-service-entity';
 
-
 @Injectable()
 export class MicroServicesService extends BaseService {
   constructor(
@@ -22,8 +21,9 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
+   * @return Success
    */
-  ApiMicroServicesGetResponse(): Observable<HttpResponse<MicroServiceEntity[]>> {
+   ApiMicroServicesGetResponse(): Observable<HttpResponse<MicroServiceEntity[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -49,16 +49,18 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
+   * @return Success
    */
-  ApiMicroServicesGet(): Observable<MicroServiceEntity[]> {
+   ApiMicroServicesGet(): Observable<MicroServiceEntity[]> {
     return this.ApiMicroServicesGetResponse().pipe(
       map(_r => _r.body)
     );
   }
+
   /**
-   * @param entity - undefined
+   * @param entity undefined
    */
-  ApiMicroServicesPostResponse(entity?: MicroServiceEntity): Observable<HttpResponse<void>> {
+   ApiMicroServicesPostResponse(entity?: MicroServiceEntity): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -85,21 +87,23 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
-   * @param entity - undefined
+   * @param entity undefined
    */
-  ApiMicroServicesPost(entity?: MicroServiceEntity): Observable<void> {
+   ApiMicroServicesPost(entity?: MicroServiceEntity): Observable<void> {
     return this.ApiMicroServicesPostResponse(entity).pipe(
       map(_r => _r.body)
     );
   }
+
   /**
-   * @param id - undefined
+   * @param id undefined
+   * @return Success
    */
-  ApiMicroServicesByIdGetResponse(id: string): Observable<HttpResponse<MicroServiceEntity>> {
+   ApiMicroServicesByIdGetResponse(id: string): Observable<HttpResponse<MicroServiceEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    
+
     let req = new HttpRequest<any>(
       "GET",
       this.rootUrl + `/api/MicroServices/${id}`,
@@ -122,22 +126,27 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
-   * @param id - undefined
+   * @param id undefined
+   * @return Success
    */
-  ApiMicroServicesByIdGet(id: string): Observable<MicroServiceEntity> {
+   ApiMicroServicesByIdGet(id: string): Observable<MicroServiceEntity> {
     return this.ApiMicroServicesByIdGetResponse(id).pipe(
       map(_r => _r.body)
     );
   }
+
   /**
-   * @param id - undefined
-   * @param entity - undefined
+   * @param params The `MicroServicesService.ApiMicroServicesByIdPutParams` containing the following parameters:
+   *
+   * - `id`: 
+   *
+   * - `entity`:
    */
-  ApiMicroServicesByIdPutResponse(params: MicroServicesService.ApiMicroServicesByIdPutParams): Observable<HttpResponse<void>> {
+   ApiMicroServicesByIdPutResponse(params: MicroServicesService.ApiMicroServicesByIdPutParams): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    
+
     __body = params.entity;
     let req = new HttpRequest<any>(
       "PUT",
@@ -161,22 +170,26 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
-   * @param id - undefined
-   * @param entity - undefined
+   * @param params The `MicroServicesService.ApiMicroServicesByIdPutParams` containing the following parameters:
+   *
+   * - `id`: 
+   *
+   * - `entity`:
    */
-  ApiMicroServicesByIdPut(params: MicroServicesService.ApiMicroServicesByIdPutParams): Observable<void> {
+   ApiMicroServicesByIdPut(params: MicroServicesService.ApiMicroServicesByIdPutParams): Observable<void> {
     return this.ApiMicroServicesByIdPutResponse(params).pipe(
       map(_r => _r.body)
     );
   }
+
   /**
-   * @param id - undefined
+   * @param id undefined
    */
-  ApiMicroServicesByIdDeleteResponse(id: string): Observable<HttpResponse<void>> {
+   ApiMicroServicesByIdDeleteResponse(id: string): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    
+
     let req = new HttpRequest<any>(
       "DELETE",
       this.rootUrl + `/api/MicroServices/${id}`,
@@ -199,17 +212,24 @@ export class MicroServicesService extends BaseService {
   }
 
   /**
-   * @param id - undefined
+   * @param id undefined
    */
-  ApiMicroServicesByIdDelete(id: string): Observable<void> {
+   ApiMicroServicesByIdDelete(id: string): Observable<void> {
     return this.ApiMicroServicesByIdDeleteResponse(id).pipe(
       map(_r => _r.body)
     );
-  }}
+  }
+}
 
 export module MicroServicesService {
-  export interface ApiMicroServicesByIdPutParams {
+
+  /**
+   * Parameters for ApiMicroServicesByIdPut
+   */
+   export interface ApiMicroServicesByIdPutParams {
+
     id: string;
+
     entity?: MicroServiceEntity;
   }
 }

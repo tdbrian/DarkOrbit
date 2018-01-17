@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ApiModule } from '../api/api.module';
 
 import { BusinessDomainsSidebarComponent } from './business-domains-sidebar/business-domains-sidebar.component';
 import { LayoutModule } from '../layout/layout.module';
@@ -17,7 +19,7 @@ const routes: Routes = [
         path: 'resources',
         children: [
           { path: '', redirectTo: 'list', pathMatch: 'full' },
-          { path: 'list', component: ProcessesComponent }
+          { path: 'list', component: ResourcesComponent }
         ]
       },
       {
@@ -36,7 +38,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    LayoutModule
+    LayoutModule,
+    FormsModule,
+    ApiModule
   ],
   declarations: [
     BusinessDomainsSidebarComponent,

@@ -1,13 +1,10 @@
 /* tslint:disable */
-import { EndpointActions } from './endpoint-actions';
 
-export interface EndpointEntity {
+export interface ProcessEntity {
 
   name?: string;
 
   description?: string;
-
-  endpointActions?: EndpointActions;
 
   id?: string;
 

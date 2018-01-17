@@ -9,9 +9,9 @@ namespace DarkOrbit.Api.Endpoints
     {
         private readonly EndpointsMongo _endpointsRepo;
 
-        public EndpointsController(EndpointsMongo microServicesRepo)
+        public EndpointsController(EndpointsMongo endpointsRepo)
         {
-            _endpointsRepo = microServicesRepo;
+            _endpointsRepo = endpointsRepo;
         }
 
         [HttpGet]

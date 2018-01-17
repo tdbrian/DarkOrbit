@@ -1,1 +1,111 @@
 <app-business-domains-sidebar></app-business-domains-sidebar>
+
+<div class="page padded">
+
+    <div class="row">
+      <div [ngClass]="{ 'col-12': firstView, 'col-8': !firstView }">
+
+        <!-- No resources -->
+        <div class="page-info full-width padded no-top-margin flex-column">
+
+          <!-- Page header -->
+          <header *ngIf="!firstView">
+            <div>
+              <h4>Resources</h4>
+              <h1>All Resources List</h1>
+            </div>
+            <div>
+              <button class="btn btn-outline-dark" (click)="startNewResource()" *ngIf="!firstView && formMode !== 'New'">
+                <i class="zmdi zmdi-plus-square"></i>
+                New Resource
+              </button>
+            </div>
+          </header>
+
+          <div class="loader" *ngIf="isLoading"></div>
+
+          <!-- Add first endpoint -->
+          <div class="text-center full-width" *ngIf="firstView && !isLoading">
+            <h3>Looks like there are aren't any resources yet.
+              <br>
+              <span class="sub">Ready to create the first one?</span>
+            </h3>
+            <button class="btn btn-primary mt-3" (click)="startNewResource()">Create Resource</button>
+          </div>
+
+          <div class="text-center" *ngIf="resources.length === 0 && !firstView && !isLoading">
+            No resources yet
+          </div>
+
+          <!-- Resources table -->
+          <table class="table" *ngIf="resources.length > 0 && !isLoading">
+            <thead>
+              <tr>
+                <th width="40">Status</th>
+                <th width="90"></th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Types</th>
+                <th width="50"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let endpoint of resources">
+                <td>
+                  <i class="zmdi zmdi-lock" title="Requires Authenticated User"></i>
+                  <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+                </td>
+                <td>
+                  <button class="btn btn-outline-dark" (click)="selectResource(endpoint)">Open</button>
+                </td>
+                <td>{{endpoint.name}}</td>
+                <td>
+                  <ng-container *ngIf="endpoint.description">{{endpoint.description}}</ng-container>
+                  <ng-container class="muted-text" *ngIf="!endpoint.description">No Description</ng-container>
+                </td>
+                <td>
+                </td>
+                <td>
+                  <i class="zmdi zmdi-caret-right-circle selected-row-icon" *ngIf="endpoint.id === this.currentResource.id" title="Currently Selected Resource"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div class="col-4 page-content padded no-top-margin" *ngIf="!firstView">
+        <div class="text-center mt-3" *ngIf="formMode === 'NotSelected'">Select endpoint to edit.</div>
+
+        <form (submit)="saveResource()" *ngIf="formMode !== 'NotSelected'">
+          <h4>Resources</h4>
+          <h3 [hidden]="formMode !== 'New'">New Resource</h3>
+          <h3 [hidden]="formMode !== 'Edit'">Edit Resource</h3>
+          <fieldset class="mt-3">
+            <div class="form-group">
+              <label for="name-input">Name</label>
+              <input id="name-input" name="name" type="text" class="form-control" [(ngModel)]="currentResource.name" placeholder="Enter name">
+              <small class="form-text text-muted">
+                Resource name may contain spaces and should not contain 'Resource' or 'Route'.
+              </small>
+            </div>
+            <div class="form-group">
+              <label for="description-input">Description</label>
+              <textarea id="description-input" name="description" class="form-control" [(ngModel)]="currentResource.description">
+                </textarea>
+              <small class="form-text text-muted">
+                Let other devs and users know what this endpoint does and what it's for.
+              </small>
+            </div>
+
+            <button [hidden]="formMode !== 'Edit'" (click)="deleteResource()" class="btn btn-danger mt-3">Delete</button>
+            <button (click)="cancelNewEditResource()" class="btn btn-dark mt-3">Cancel</button>
+            <button [hidden]="formMode !== 'New'" type="submit" class="btn btn-primary mt-3">Create</button>
+            <button [hidden]="formMode !== 'Edit'" type="submit" class="btn btn-primary mt-3">Save</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>

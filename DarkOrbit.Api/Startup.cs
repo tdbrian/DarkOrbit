@@ -1,5 +1,8 @@
 ﻿using DarkOrbit.Api.Endpoints;
 using DarkOrbit.Api.MicroServices;
+using DarkOrbit.Api.Processes;
+using DarkOrbit.Api.Resources;
+using DarkOrbit.Api.Users;
 using DarkOrbit.Api.Utilities.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +35,9 @@ namespace DarkOrbit.Api
             services.AddSingleton<CustomerMongoDb>();
             services.AddTransient<MicroServicesMongo>();
             services.AddTransient<EndpointsMongo>();
+            services.AddTransient<ProcessesMongo>();
+            services.AddTransient<ResourcesMongo>();
+            services.AddTransient<UsersMongo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

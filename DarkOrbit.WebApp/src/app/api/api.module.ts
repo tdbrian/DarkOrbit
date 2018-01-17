@@ -4,6 +4,9 @@ import { ApiConfiguration } from './api-configuration';
 
 import { EndpointsService } from './services/endpoints.service';
 import { MicroServicesService } from './services/micro-services.service';
+import { ProcessesService } from './services/processes.service';
+import { ResourcesService } from './services/resources.service';
+import { UsersService } from './services/users.service';
 
 /**
  * Module that provides instances for all API services
@@ -19,7 +22,10 @@ import { MicroServicesService } from './services/micro-services.service';
   providers: [
     ApiConfiguration,
    EndpointsService,
-   MicroServicesService
+   MicroServicesService,
+   ProcessesService,
+   ResourcesService,
+   UsersService
   ],
 })
 export class ApiModule { }

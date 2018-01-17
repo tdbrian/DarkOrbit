@@ -7,7 +7,7 @@ import { MicroServicesService } from '../../api/services/micro-services.service'
   templateUrl: './new-service.component.html'
 })
 export class NewServiceComponent {
-  service = new MicroServiceEntity();
+  service = {} as MicroServiceEntity;
   isSaving = false;
   error: string;
   isJsonApi: boolean;

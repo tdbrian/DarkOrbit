@@ -9,10 +9,10 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { filter } from 'rxjs/operators/filter';
 
-import { EndpointEntity } from '../models/endpoint-entity';
+import { ProcessEntity } from '../models/process-entity';
 
 @Injectable()
-export class EndpointsService extends BaseService {
+export class ProcessesService extends BaseService {
   constructor(
     config: ApiConfiguration,
     http: HttpClient
@@ -23,13 +23,13 @@ export class EndpointsService extends BaseService {
   /**
    * @return Success
    */
-   ApiEndpointsGetResponse(): Observable<HttpResponse<EndpointEntity[]>> {
+   ApiProcessesGetResponse(): Observable<HttpResponse<ProcessEntity[]>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     let req = new HttpRequest<any>(
       "GET",
-      this.rootUrl + `/api/Endpoints`,
+      this.rootUrl + `/api/Processes`,
       __body,
       {
         headers: __headers,
@@ -41,9 +41,9 @@ export class EndpointsService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: EndpointEntity[] = null;
-        _body = _resp.body as EndpointEntity[]
-        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity[]>;
+        let _body: ProcessEntity[] = null;
+        _body = _resp.body as ProcessEntity[]
+        return _resp.clone({body: _body}) as HttpResponse<ProcessEntity[]>;
       })
     );
   }
@@ -51,8 +51,8 @@ export class EndpointsService extends BaseService {
   /**
    * @return Success
    */
-   ApiEndpointsGet(): Observable<EndpointEntity[]> {
-    return this.ApiEndpointsGetResponse().pipe(
+   ApiProcessesGet(): Observable<ProcessEntity[]> {
+    return this.ApiProcessesGetResponse().pipe(
       map(_r => _r.body)
     );
   }
@@ -60,14 +60,14 @@ export class EndpointsService extends BaseService {
   /**
    * @param entity undefined
    */
-   ApiEndpointsPostResponse(entity?: EndpointEntity): Observable<HttpResponse<void>> {
+   ApiProcessesPostResponse(entity?: ProcessEntity): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = entity;
     let req = new HttpRequest<any>(
       "POST",
-      this.rootUrl + `/api/Endpoints`,
+      this.rootUrl + `/api/Processes`,
       __body,
       {
         headers: __headers,
@@ -89,8 +89,8 @@ export class EndpointsService extends BaseService {
   /**
    * @param entity undefined
    */
-   ApiEndpointsPost(entity?: EndpointEntity): Observable<void> {
-    return this.ApiEndpointsPostResponse(entity).pipe(
+   ApiProcessesPost(entity?: ProcessEntity): Observable<void> {
+    return this.ApiProcessesPostResponse(entity).pipe(
       map(_r => _r.body)
     );
   }
@@ -99,14 +99,14 @@ export class EndpointsService extends BaseService {
    * @param id undefined
    * @return Success
    */
-   ApiEndpointsByIdGetResponse(id: string): Observable<HttpResponse<EndpointEntity>> {
+   ApiProcessesByIdGetResponse(id: string): Observable<HttpResponse<ProcessEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       "GET",
-      this.rootUrl + `/api/Endpoints/${id}`,
+      this.rootUrl + `/api/Processes/${id}`,
       __body,
       {
         headers: __headers,
@@ -118,9 +118,9 @@ export class EndpointsService extends BaseService {
       filter(_r => _r instanceof HttpResponse),
       map(_r => {
         let _resp = _r as HttpResponse<any>;
-        let _body: EndpointEntity = null;
-        _body = _resp.body as EndpointEntity
-        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity>;
+        let _body: ProcessEntity = null;
+        _body = _resp.body as ProcessEntity
+        return _resp.clone({body: _body}) as HttpResponse<ProcessEntity>;
       })
     );
   }
@@ -129,20 +129,20 @@ export class EndpointsService extends BaseService {
    * @param id undefined
    * @return Success
    */
-   ApiEndpointsByIdGet(id: string): Observable<EndpointEntity> {
-    return this.ApiEndpointsByIdGetResponse(id).pipe(
+   ApiProcessesByIdGet(id: string): Observable<ProcessEntity> {
+    return this.ApiProcessesByIdGetResponse(id).pipe(
       map(_r => _r.body)
     );
   }
 
   /**
-   * @param params The `EndpointsService.ApiEndpointsByIdPutParams` containing the following parameters:
+   * @param params The `ProcessesService.ApiProcessesByIdPutParams` containing the following parameters:
    *
    * - `id`: 
    *
    * - `entity`:
    */
-   ApiEndpointsByIdPutResponse(params: EndpointsService.ApiEndpointsByIdPutParams): Observable<HttpResponse<void>> {
+   ApiProcessesByIdPutResponse(params: ProcessesService.ApiProcessesByIdPutParams): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -150,7 +150,7 @@ export class EndpointsService extends BaseService {
     __body = params.entity;
     let req = new HttpRequest<any>(
       "PUT",
-      this.rootUrl + `/api/Endpoints/${params.id}`,
+      this.rootUrl + `/api/Processes/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -170,14 +170,14 @@ export class EndpointsService extends BaseService {
   }
 
   /**
-   * @param params The `EndpointsService.ApiEndpointsByIdPutParams` containing the following parameters:
+   * @param params The `ProcessesService.ApiProcessesByIdPutParams` containing the following parameters:
    *
    * - `id`: 
    *
    * - `entity`:
    */
-   ApiEndpointsByIdPut(params: EndpointsService.ApiEndpointsByIdPutParams): Observable<void> {
-    return this.ApiEndpointsByIdPutResponse(params).pipe(
+   ApiProcessesByIdPut(params: ProcessesService.ApiProcessesByIdPutParams): Observable<void> {
+    return this.ApiProcessesByIdPutResponse(params).pipe(
       map(_r => _r.body)
     );
   }
@@ -185,14 +185,14 @@ export class EndpointsService extends BaseService {
   /**
    * @param id undefined
    */
-   ApiEndpointsByIdDeleteResponse(id: string): Observable<HttpResponse<void>> {
+   ApiProcessesByIdDeleteResponse(id: string): Observable<HttpResponse<void>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       "DELETE",
-      this.rootUrl + `/api/Endpoints/${id}`,
+      this.rootUrl + `/api/Processes/${id}`,
       __body,
       {
         headers: __headers,
@@ -214,22 +214,22 @@ export class EndpointsService extends BaseService {
   /**
    * @param id undefined
    */
-   ApiEndpointsByIdDelete(id: string): Observable<void> {
-    return this.ApiEndpointsByIdDeleteResponse(id).pipe(
+   ApiProcessesByIdDelete(id: string): Observable<void> {
+    return this.ApiProcessesByIdDeleteResponse(id).pipe(
       map(_r => _r.body)
     );
   }
 }
 
-export module EndpointsService {
+export module ProcessesService {
 
   /**
-   * Parameters for ApiEndpointsByIdPut
+   * Parameters for ApiProcessesByIdPut
    */
-   export interface ApiEndpointsByIdPutParams {
+   export interface ApiProcessesByIdPutParams {
 
     id: string;
 
-    entity?: EndpointEntity;
+    entity?: ProcessEntity;
   }
 }

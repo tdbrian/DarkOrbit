@@ -17,7 +17,7 @@ export class EndpointsComponent implements OnInit {
   firstView = true;
   endpoints: EndpointEntity[] = [];
   isLoading = true;
-  currentService = new MicroServiceEntity();
+  currentService = {} as MicroServiceEntity;
   rawCurrentEndpoint: EndpointEntity;
   currentEndpoint: EndpointEntity;
   error: string;
@@ -108,8 +108,8 @@ export class EndpointsComponent implements OnInit {
   }
 
   private generateNewEndpoint(): EndpointEntity {
-    const endpoint = new EndpointEntity();
-    const actions = new EndpointActions();
+    const endpoint = {} as EndpointEntity;
+    const actions = {} as EndpointActions;
     endpoint.endpointActions = actions;
     return endpoint;
   }
