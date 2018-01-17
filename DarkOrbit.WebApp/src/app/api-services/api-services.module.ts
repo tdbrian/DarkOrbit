@@ -15,7 +15,6 @@ import { ApiModule } from '../api/api.module';
 
 const routes: Routes = [
   { path: 'api-services', redirectTo: 'api-services/list', pathMatch: 'full' },
-  // { path: 'api-services/:id', redirectTo: 'api-services/:id/endpoints', pathMatch: 'full' },
   {
     path: 'api-services',
     children: [

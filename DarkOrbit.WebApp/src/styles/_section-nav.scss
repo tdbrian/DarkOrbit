@@ -21,6 +21,10 @@
     padding-bottom: 5px;
     font-size: 11px;
     opacity: .8;
+    margin-top: 20px;
+    &:first-of-type {
+      margin-top: 0;
+    }
     span {
       padding-left: 4px;
     }
