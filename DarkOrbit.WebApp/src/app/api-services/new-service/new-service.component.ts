@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MicroServiceEntity } from '../../api/models/micro-service-entity';
 import { MicroServicesService } from '../../api/services/micro-services.service';
+import { NotificationsService } from 'angular2-notifications';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-service',
@@ -12,15 +14,25 @@ export class NewServiceComponent {
   error: string;
   isJsonApi: boolean;
 
-  constructor(private microService: MicroServicesService) { }
+  constructor(
+    private microService: MicroServicesService,
+    private notifications: NotificationsService,
+    private router: Router
+  ) {}
 
   async createService() {
     this.isSaving = true;
     this.setServiceType();
     const newService = {...this.service};
-    await this.microService.ApiMicroServicesPost(newService).toPromise()
-      .catch(err => this.error = err);
-    this.isSaving = false;
+    try {
+      await this.microService.ApiMicroServicesPost(newService).toPromise();
+      this.notifications.success('Created', 'Service Created');
+    } catch (error) {
+      this.notifications.error('Error', 'Error creating service');
+    } finally {
+      this.isSaving = false;
+      this.router.navigateByUrl('/api-services/list');
+    }
   }
 
   private setServiceType() {

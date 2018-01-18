@@ -1,0 +1,32 @@
+<app-endpoint-sidebar [endpoints]="endpoints"></app-endpoint-sidebar>
+
+<div class="page padded">
+
+  <!-- Page header -->
+  <header>
+    <div>
+      <h4>{{service?.name}} Service</h4>
+      <h1>{{endpoint?.name}} Methods</h1>
+    </div>
+    <div>
+      <button class="btn btn-outline-dark" routerLink="../new">
+        <i class="zmdi zmdi-plus-square"></i>
+        New Method
+      </button>
+    </div>
+  </header>
+
+  <!-- Get block -->
+
+  <div class="page-info full-width padded flex-column" *ngFor="let method of methods">
+    <div>
+      <span [ngClass]="{'badge-info': method.type === 'Get Single' || method.type === 'Get Multiple', 'badge-danger': method.type === 'Delete', 'badge-success': method.type === 'Put' || method.type === 'Post'}"
+      class="badge">{{method.type}}</span>
+      <span>{{method.path}}</span>
+    </div>
+
+    <!-- Logic builder -->
+
+  </div>
+
+</div>

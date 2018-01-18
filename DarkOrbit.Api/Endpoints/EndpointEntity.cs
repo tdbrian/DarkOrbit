@@ -21,6 +21,8 @@ namespace DarkOrbit.Api.Endpoints
 
         public string Description { get; set; }
 
+        public string ServiceId { get; set; }
+
         public EndpointActions EndpointActions { get; set; }
     }
 }

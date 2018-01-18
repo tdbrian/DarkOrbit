@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DarkOrbit.Api.Utilities.Database;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DarkOrbit.Api.Endpoints
@@ -19,6 +18,11 @@ namespace DarkOrbit.Api.Endpoints
         public async Task<EndpointEntity> GetById(string id)
         {
             return (await _endpointsServicesCollection.FindAsync(x => x.Deleted == false && x.Id == id)).FirstOrDefault();
+        }
+
+        public async Task<List<EndpointEntity>> GetByServiceId(string serviceId)
+        {
+            return (await _endpointsServicesCollection.FindAsync(x => x.Deleted == false && x.ServiceId == serviceId)).ToList();
         }
 
         public async Task<List<EndpointEntity>> GetAll()

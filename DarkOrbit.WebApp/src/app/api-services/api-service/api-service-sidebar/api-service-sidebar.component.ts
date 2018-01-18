@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-api-service-sidebar',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApiServiceSidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public apiSvc: ApiService) { }
 
   ngOnInit() {
   }

@@ -38,11 +38,11 @@ export class EndpointsComponent implements OnInit {
   async loadData() {
     this.currentEndpoint = this.generateNewEndpoint();
     this.error = null;
-    const id = this.route.snapshot.params.id;
-    if (!id) { this.router.navigateByUrl('../list'); }
+    const id = this.route.snapshot.params.serviceId;
+    if (!id) { this.router.navigateByUrl('/api-services/list'); }
     try {
       this.currentService = await this.apiService.getCurrentService(id);
-      this.endpoints = await this.endpointsService.ApiEndpointsGet().toPromise();
+      this.endpoints = await this.endpointsService.ApiEndpointsByServiceByServiceIdGet(this.currentService.id).toPromise();
     } catch (error) {
       this.notifications.error('Error', 'Unable initial endpoints information');
     }
@@ -71,6 +71,7 @@ export class EndpointsComponent implements OnInit {
 
   async saveEndpoint() {
     if (this.formMode === 'New') {
+      this.currentEndpoint.serviceId = this.currentService.id;
       const newEndpoint = {...this.currentEndpoint};
       this.endpoints.push(newEndpoint);
       this.currentEndpoint = newEndpoint;
@@ -79,7 +80,7 @@ export class EndpointsComponent implements OnInit {
       try {
         await this.createEndpoint(newEndpoint);
         this.notifications.success('Created', 'Endpoint Created');
-        this.endpoints = await this.endpointsService.ApiEndpointsGet().toPromise();
+        this.endpoints = await this.endpointsService.ApiEndpointsByServiceByServiceIdGet(this.currentService.id).toPromise();
       } catch (error) {
         this.notifications.error('Error', 'Error creating new endpoint');
       }

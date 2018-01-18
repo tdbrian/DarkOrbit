@@ -42,7 +42,7 @@
           <thead>
             <tr>
               <th width="40">Status</th>
-              <th width="90"></th>
+              <th width="150"></th>
               <th>Name</th>
               <th>Description</th>
               <th>Types</th>
@@ -57,6 +57,7 @@
               </td>
               <td>
                 <button class="btn btn-outline-dark" (click)="selectEndpoint(endpoint)">Open</button>
+                <a class="btn btn-outline-primary" [routerLink]="['../endpoint/', endpoint.id]">Logic</a>
               </td>
               <td>{{endpoint.name}}</td>
               <td>
@@ -88,6 +89,7 @@
         <h3 [hidden]="formMode !== 'New'">New Endpoint</h3>
         <h3 [hidden]="formMode !== 'Edit'">Edit Endpoint</h3>
         <fieldset class="mt-3">
+          <a class="btn btn-primary mb-3" [routerLink]="'../endpoint/' + currentEndpoint.id">Edit Logic</a>
           <div class="form-group">
             <label for="name-input">Name</label>
             <input id="name-input" name="name" type="text" class="form-control" [(ngModel)]="currentEndpoint.name" placeholder="Enter name">

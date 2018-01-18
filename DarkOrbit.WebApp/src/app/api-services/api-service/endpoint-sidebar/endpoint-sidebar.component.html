@@ -1,0 +1,17 @@
+<div class="section-nav">
+  <app-corner-logo></app-corner-logo>
+
+  <a routerLink="../../endpoints" class="mb-3">
+    <i class="zmdi zmdi-long-arrow-return"></i> Back to Endpoints
+  </a>
+
+  <div class="header">
+    <i class="zmdi zmdi-http"></i>
+    {{apiSvc.currentService?.name}} Endpoints
+  </div>
+
+  <ng-container *ngFor="let endpoint of endpoints;">
+    <a [routerLink]="['../', endpoint?.id]" routerLinkActive="active">{{endpoint?.name}}</a>
+  </ng-container>
+
+</div>

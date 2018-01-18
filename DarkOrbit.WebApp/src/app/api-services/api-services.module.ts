@@ -12,6 +12,8 @@ import { SettingsComponent } from './api-service/settings/settings.component';
 import { ApiServiceSidebarComponent } from './api-service/api-service-sidebar/api-service-sidebar.component';
 import { NewServiceComponent } from './new-service/new-service.component';
 import { ApiModule } from '../api/api.module';
+import { EndpointComponent } from './api-service/endpoint/endpoint.component';
+import { EndpointSidebarComponent } from './api-service/endpoint-sidebar/endpoint-sidebar.component';
 
 const routes: Routes = [
   { path: 'api-services', redirectTo: 'api-services/list', pathMatch: 'full' },
@@ -21,10 +23,11 @@ const routes: Routes = [
       { path: 'list', component: ApiServicesListComponent },
       { path: 'new', component: NewServiceComponent },
       {
-        path: ':id',
+        path: ':serviceId',
         children: [
           { path: '', redirectTo: 'endpoints', pathMatch: 'full' },
           { path: 'endpoints', component: EndpointsComponent },
+          { path: 'endpoint/:endpointId', component: EndpointComponent },
           { path: 'settings', component: SettingsComponent },
         ]
       },
@@ -49,7 +52,10 @@ const routes: Routes = [
     EndpointsComponent,
     SettingsComponent,
     ApiServiceSidebarComponent,
-    NewServiceComponent
+    NewServiceComponent,
+    EndpointComponent,
+    EndpointSidebarComponent,
+    EndpointSidebarComponent
   ]
 })
 export class ApiServicesModule { }

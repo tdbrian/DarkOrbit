@@ -96,6 +96,46 @@ export class EndpointsService extends BaseService {
   }
 
   /**
+   * @param serviceId undefined
+   * @return Success
+   */
+   ApiEndpointsByServiceByServiceIdGetResponse(serviceId: string): Observable<HttpResponse<EndpointEntity[]>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      "GET",
+      this.rootUrl + `/api/Endpoints/ByService/${serviceId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      filter(_r => _r instanceof HttpResponse),
+      map(_r => {
+        let _resp = _r as HttpResponse<any>;
+        let _body: EndpointEntity[] = null;
+        _body = _resp.body as EndpointEntity[]
+        return _resp.clone({body: _body}) as HttpResponse<EndpointEntity[]>;
+      })
+    );
+  }
+
+  /**
+   * @param serviceId undefined
+   * @return Success
+   */
+   ApiEndpointsByServiceByServiceIdGet(serviceId: string): Observable<EndpointEntity[]> {
+    return this.ApiEndpointsByServiceByServiceIdGetResponse(serviceId).pipe(
+      map(_r => _r.body)
+    );
+  }
+
+  /**
    * @param id undefined
    * @return Success
    */

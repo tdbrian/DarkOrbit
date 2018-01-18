@@ -7,6 +7,8 @@ export interface EndpointEntity {
 
   description?: string;
 
+  serviceId?: string;
+
   endpointActions?: EndpointActions;
 
   id?: string;

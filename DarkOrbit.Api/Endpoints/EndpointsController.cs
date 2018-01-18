@@ -20,6 +20,12 @@ namespace DarkOrbit.Api.Endpoints
             return await _endpointsRepo.GetAll();
         }
 
+        [HttpGet("ByService/{serviceId}")]
+        public async Task<List<EndpointEntity>> GetEndpointsByService(string serviceId)
+        {
+            return await _endpointsRepo.GetByServiceId(serviceId);
+        }
+
         [HttpGet("{id}")]
         public async Task<EndpointEntity> Get(string id)
         {
