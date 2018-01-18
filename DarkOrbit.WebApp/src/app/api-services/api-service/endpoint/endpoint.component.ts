@@ -8,7 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-endpoint',
-  templateUrl: './endpoint.component.html'
+  templateUrl: './endpoint.component.html',
+  styleUrls: ['./endpoint.component.scss']
 })
 export class EndpointComponent implements OnInit {
   endpoints: EndpointEntity[];

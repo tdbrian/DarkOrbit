@@ -1,7 +1,11 @@
-$content-background: #141e2d;
+@import './variables';
 
 .page {
   margin-left: $main-sidebar-width + $section-nav-width;
+
+  &.toolbar-open {
+    margin-right: $section-nav-width;
+  }
 
   &.padded,.padded {
     padding: 30px;
@@ -67,6 +71,7 @@ $content-background: #141e2d;
 
   .row {
     margin-right: 0;
+    margin-left: 0;
   }
 
   .page-info {

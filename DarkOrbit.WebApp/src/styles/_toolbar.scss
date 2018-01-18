@@ -1,0 +1,20 @@
+
+
+@import './variables';
+
+.side-toolbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: $section-nav-width;
+  background-color: $content-background;
+  padding: 30px;
+}
+
+.toolbar-header {
+  font-weight: 500;
+  span {
+    font-weight: 300;
+  }
+}

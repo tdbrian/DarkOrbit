@@ -1,6 +1,6 @@
 <app-endpoint-sidebar [endpoints]="endpoints"></app-endpoint-sidebar>
 
-<div class="page padded">
+<div class="page padded toolbar-open">
 
   <!-- Page header -->
   <header>
@@ -18,15 +18,41 @@
 
   <!-- Get block -->
 
-  <div class="page-info full-width padded flex-column" *ngFor="let method of methods">
-    <div>
-      <span [ngClass]="{'badge-info': method.type === 'Get Single' || method.type === 'Get Multiple', 'badge-danger': method.type === 'Delete', 'badge-success': method.type === 'Put' || method.type === 'Post'}"
-      class="badge">{{method.type}}</span>
-      <span>{{method.path}}</span>
+  <div class="page-info full-width padded flex-column method-area" *ngFor="let method of methods">
+
+    <!-- Header -->
+    <div class="row justify-content-between">
+      <div>
+          <span [ngClass]="{'badge-info': method.type === 'Get Single' || method.type === 'Get Multiple', 'badge-danger': method.type === 'Delete', 'badge-success': method.type === 'Put' || method.type === 'Post'}"
+            class="badge">{{method.type}}</span>
+      </div>
+      <div class="text-right">
+        <span class="badge badge-dark dark-path">{{method.path}}</span>
+      </div>
     </div>
 
     <!-- Logic builder -->
+    <div class="row">
+
+      <div class="inputs-area col-3">
+        <div class="process-label">Inputs</div>
+        <div class="text-right">
+          <button class="btn btn-outline-dark btn-sm">Add Input</button>
+        </div>
+      </div>
+
+      <div class="process-area col-9">
+        <div class="process-label">Process</div>
+      </div>
+
+    </div>
 
   </div>
 
+</div>
+
+<!-- Toolbar -->
+
+<div class="side-toolbar">
+  <div class="toolbar-header">Process <span>Toolbar</span></div>
 </div>

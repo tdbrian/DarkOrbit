@@ -44,7 +44,6 @@
               <th width="40">Status</th>
               <th width="150"></th>
               <th>Name</th>
-              <th>Description</th>
               <th>Types</th>
               <th width="50"></th>
             </tr>
@@ -60,10 +59,6 @@
                 <a class="btn btn-outline-primary" [routerLink]="['../endpoint/', endpoint.id]">Logic</a>
               </td>
               <td>{{endpoint.name}}</td>
-              <td>
-                <ng-container *ngIf="endpoint.description">{{endpoint.description}}</ng-container>
-                <ng-container class="muted-text" *ngIf="!endpoint.description">No Description</ng-container>
-              </td>
               <td>
                 <span class="badge badge-info" *ngIf="endpoint.endpointActions.includeGetOne">Get One</span>
                 <span class="badge badge-info" *ngIf="endpoint.endpointActions.includeGetMultiple">Get Multiple</span>
