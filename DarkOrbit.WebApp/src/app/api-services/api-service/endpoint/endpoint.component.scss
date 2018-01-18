@@ -3,6 +3,10 @@
   margin-top: 15px;
 }
 
+small {
+  font-size: 13px;
+}
+
 .inputs-area {
   padding: 10px;
   background-color: #182335;
@@ -26,4 +30,13 @@
   text-transform: uppercase;
   font-size: 11px;
   font-weight: 500;
+
+  i {
+    font-size: 16px;
+    opacity: .7;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
