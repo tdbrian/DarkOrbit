@@ -7,6 +7,23 @@ small {
   font-size: 13px;
 }
 
+.input-row {
+  display: flex;
+  font-size: 12px;
+  justify-content: flex-end;
+  opacity: .6;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
+  i {
+    font-size: 16px;
+  }
+  div {
+    padding-left: 10px;
+  }
+}
+
 .inputs-area {
   padding: 10px;
   background-color: #182335;
@@ -30,6 +47,9 @@ small {
   text-transform: uppercase;
   font-size: 11px;
   font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 
   i {
     font-size: 16px;
@@ -38,5 +58,29 @@ small {
     &:hover {
       opacity: 1;
     }
+  }
+}
+
+.task {
+  display: flex;
+  background-color: #182335;
+  height: 30px;
+  font-size: 12px;
+  border-radius: 2px;
+  .leader {
+    border-radius: 2px;
+    display: flex;
+    font-size: 18px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    background-color: #4c9e5e;
+    width: 30px;
+  }
+  .name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
   }
 }
