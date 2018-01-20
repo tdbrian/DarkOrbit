@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import {
-  HttpClient, HttpRequest, HttpResponse, 
+  HttpClient, HttpRequest, HttpResponse,
   HttpHeaders, HttpParams } from '@angular/common/http';
 import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
@@ -80,7 +80,7 @@ export class EndpointsService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -178,7 +178,7 @@ export class EndpointsService extends BaseService {
   /**
    * @param params The `EndpointsService.ApiEndpointsByIdPutParams` containing the following parameters:
    *
-   * - `id`: 
+   * - `id`:
    *
    * - `entity`:
    */
@@ -203,7 +203,7 @@ export class EndpointsService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );
@@ -212,7 +212,7 @@ export class EndpointsService extends BaseService {
   /**
    * @param params The `EndpointsService.ApiEndpointsByIdPutParams` containing the following parameters:
    *
-   * - `id`: 
+   * - `id`:
    *
    * - `entity`:
    */
@@ -245,7 +245,7 @@ export class EndpointsService extends BaseService {
       map(_r => {
         let _resp = _r as HttpResponse<any>;
         let _body: void = null;
-        
+
         return _resp.clone({body: _body}) as HttpResponse<void>;
       })
     );

@@ -7,6 +7,7 @@ import { MicroServicesService } from '../../../api/services/micro-services.servi
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { EndpointMethod } from '../../../api/models/endpoint-method';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-endpoint',
@@ -56,7 +57,7 @@ export class EndpointComponent implements OnInit {
       this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
       this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
       this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
-      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {
       this.sendEndpointErrorNotification();
@@ -66,7 +67,7 @@ export class EndpointComponent implements OnInit {
   async addGetOne() {
     try {
       this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
-      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {
       this.sendEndpointErrorNotification();
@@ -76,7 +77,7 @@ export class EndpointComponent implements OnInit {
   async addGetMultiple() {
     try {
       this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
-      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {
       this.sendEndpointErrorNotification();
@@ -86,7 +87,7 @@ export class EndpointComponent implements OnInit {
   async addPost() {
     try {
       this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
-      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {
       this.sendEndpointErrorNotification();
@@ -96,7 +97,7 @@ export class EndpointComponent implements OnInit {
   async addPut() {
     try {
       this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
-      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {
       this.sendEndpointErrorNotification();
@@ -106,7 +107,7 @@ export class EndpointComponent implements OnInit {
   async addDelete() {
     try {
       this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
-      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {
       this.sendEndpointErrorNotification();
