@@ -50,35 +50,72 @@ export class EndpointComponent implements OnInit {
   }
 
   async addAll() {
-    this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
-    this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
-    this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
-    this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
-    this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+    try {
+      this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
+      this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
+      this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
+      this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
+      this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
   }
 
   async addGetOne() {
-    this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
+    try {
+      this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
   }
 
   async addGetMultiple() {
-    this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
+    try {
+      this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
   }
 
   async addPost() {
-    this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
+    try {
+      this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
   }
 
   async addPut() {
-    this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
+    try {
+      this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
   }
 
   async addDelete() {
-    this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+    try {
+      this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id });
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
   }
 
   private async addEndpointMethod(type: string, name: string) {
-    const endpointMethod = <EndpointMethod> {
+    this.firstView = false;
+    const endpointMethod = <EndpointMethod>{
       name,
       description: '',
       processId: null,
@@ -87,5 +124,13 @@ export class EndpointComponent implements OnInit {
     };
     if (this.endpoint.endpointMethods === null) { this.endpoint.endpointMethods = []; }
     this.endpoint.endpointMethods.push(endpointMethod);
+  }
+
+  private sendEndpointSavedNotification() {
+    this.notifications.success('Create', 'Endpoint method created');
+  }
+
+  private sendEndpointErrorNotification() {
+    this.notifications.error('Error', 'Method creation error');
   }
 }
