@@ -6,6 +6,7 @@ import { EndpointsService } from '../../../api/services/endpoints.service';
 import { MicroServicesService } from '../../../api/services/micro-services.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { EndpointMethod } from '../../../api/models/endpoint-method';
 
 @Component({
   selector: 'app-endpoint',
@@ -15,31 +16,9 @@ import { Router } from '@angular/router';
 export class EndpointComponent implements OnInit {
   isLoading = true;
   firstView = true;
-  endpoints: EndpointEntity[];
+  endpoints: EndpointEntity[] = [];
   endpoint: EndpointEntity;
   service: MicroServiceEntity;
-  methods = [
-    {
-      path: '/api/v1/domains/{:id}',
-      type: 'Get Single'
-    },
-    {
-      path: '/api/v1/domains',
-      type: 'Get Multiple'
-    },
-    {
-      path: '/api/v1/domains/{id}',
-      type: 'Put'
-    },
-    {
-      path: '/api/v1/domains',
-      type: 'Post'
-    },
-    {
-      path: '/api/v1/domains',
-      type: 'Delete'
-    }
-  ];
 
   constructor(
     private notifications: NotificationsService,
@@ -70,7 +49,43 @@ export class EndpointComponent implements OnInit {
     });
   }
 
-  newMethod() {
+  async addAll() {
+    this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
+    this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
+    this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
+    this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
+    this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+  }
 
+  async addGetOne() {
+    this.addEndpointMethod('Get', 'Get ' + this.endpoint.name);
+  }
+
+  async addGetMultiple() {
+    this.addEndpointMethod('Get', 'Get List of ' + this.endpoint.name);
+  }
+
+  async addPost() {
+    this.addEndpointMethod('Post', 'Create ' + this.endpoint.name);
+  }
+
+  async addPut() {
+    this.addEndpointMethod('Put', 'Update ' + this.endpoint.name);
+  }
+
+  async addDelete() {
+    this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+  }
+
+  private async addEndpointMethod(type: string, name: string) {
+    const endpointMethod = <EndpointMethod> {
+      name,
+      description: '',
+      processId: null,
+      subRouteFragments: [],
+      type
+    };
+    if (this.endpoint.endpointMethods === null) { this.endpoint.endpointMethods = []; }
+    this.endpoint.endpointMethods.push(endpointMethod);
   }
 }
