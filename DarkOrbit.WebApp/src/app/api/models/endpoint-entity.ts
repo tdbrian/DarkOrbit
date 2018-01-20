@@ -1,17 +1,19 @@
 /* tslint:disable */
-import { EndpointActions } from './endpoint-actions';
+import { EndpointMethod } from './endpoint-method';
 
 export interface EndpointEntity {
 
-  name?: string;
+  id?: string;
 
-  description?: string;
+  name?: string;
 
   serviceId?: string;
 
-  endpointActions?: EndpointActions;
+  requiresAuthentication?: boolean;
 
-  id?: string;
+  endpointMethods?: EndpointMethod[];
+
+  description?: string;
 
   created?: string;
 

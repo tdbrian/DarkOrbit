@@ -37,7 +37,7 @@ namespace DarkOrbit.Api.Endpoints
                 .Set(x => x.Name, endpointsService.Name)
                 .Set(x => x.UpdatedBy, endpointsService.UpdatedBy)
                 .Set(x => x.LastUpdated, DateTime.Now)
-                .Set(x => x.EndpointActions, endpointsService.EndpointActions);
+                .Set(x => x.EndpointMethods, endpointsService.EndpointMethods);
 
             return await _endpointsServicesCollection.UpdateOneAsync(x => x.Id == endpointsService.Id, update);
         }

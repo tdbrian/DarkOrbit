@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MicroServiceEntity } from '../../../api/models/micro-service-entity';
 import { EndpointEntity } from '../../../api/models/endpoint-entity';
 import { EndpointsService } from '../../../api/services/endpoints.service';
-import { EndpointActions } from '../../../api/models/endpoint-actions';
 import { NotificationsService } from 'angular2-notifications';
+import { EndpointMethod } from '../../../api/models/endpoint-method';
 
 export type EndpointFormModes = 'NotSelected'|'New'|'Edit';
 
@@ -103,6 +103,14 @@ export class EndpointsComponent implements OnInit {
     .ApiEndpointsByIdPut({ entity: this.currentEndpoint, id: this.currentEndpoint.id })
     .toPromise()
 
+  containsMethodType(type: string, endpoint: EndpointEntity) {
+    endpoint.endpointMethods.reduce((last, method) => {
+      if (last) { return true; }
+      if (method.type === type) { return true; }
+      return false;
+    }, false);
+  }
+
   async deleteEndpoint() {
     let endpointToBeDeleted = this.endpoints.find(e => e.id === this.currentEndpoint.id);
     endpointToBeDeleted = {...endpointToBeDeleted};
@@ -121,8 +129,8 @@ export class EndpointsComponent implements OnInit {
 
   private generateNewEndpoint(): EndpointEntity {
     const endpoint = {} as EndpointEntity;
-    const actions = {} as EndpointActions;
-    endpoint.endpointActions = actions;
+    const methods = [] as EndpointMethod[];
+    endpoint.endpointMethods = methods;
     return endpoint;
   }
 }

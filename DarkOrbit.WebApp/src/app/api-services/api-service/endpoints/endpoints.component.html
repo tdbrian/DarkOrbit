@@ -60,11 +60,10 @@
               </td>
               <td>{{endpoint.name}}</td>
               <td>
-                <span class="badge badge-info" *ngIf="endpoint.endpointActions.includeGetOne">Get One</span>
-                <span class="badge badge-info" *ngIf="endpoint.endpointActions.includeGetMultiple">Get Multiple</span>
-                <span class="badge badge-success" *ngIf="endpoint.endpointActions.includePost">Post</span>
-                <span class="badge badge-success" *ngIf="endpoint.endpointActions.includePut">Put</span>
-                <span class="badge badge-danger" *ngIf="endpoint.endpointActions.includeDelete">Delete</span>
+                <span class="badge badge-info" *ngIf="containsMethodType('Get', endpoint)">Get One</span>
+                <span class="badge badge-success" *ngIf="containsMethodType('Post', endpoint)">Post</span>
+                <span class="badge badge-success" *ngIf="containsMethodType('Put', endpoint)">Put</span>
+                <span class="badge badge-danger" *ngIf="containsMethodType('Delete', endpoint)">Delete</span>
               </td>
               <td>
                 <i class="zmdi zmdi-caret-right-circle selected-row-icon" *ngIf="endpoint.id === this.currentEndpoint.id" title="Currently Selected Endpoint"></i>
@@ -84,7 +83,7 @@
         <h3 [hidden]="formMode !== 'New'">New Endpoint</h3>
         <h3 [hidden]="formMode !== 'Edit'">Edit Endpoint</h3>
         <fieldset class="mt-3">
-          <a class="btn btn-primary mb-3" [routerLink]="'../endpoint/' + currentEndpoint.id">Edit Logic</a>
+          <a class="btn btn-primary mb-3" [routerLink]="'../endpoint/' + currentEndpoint.id" *ngIf="formMode !== 'New'">Edit Logic</a>
           <div class="form-group">
             <label for="name-input">Name</label>
             <input id="name-input" name="name" type="text" class="form-control" [(ngModel)]="currentEndpoint.name" placeholder="Enter name">
@@ -99,39 +98,6 @@
             <small class="form-text text-muted">
               Let other devs and users know what this endpoint does and what it's for.
             </small>
-          </div>
-          <div class="form-group">
-            <label>Endpoint Types</label>
-            <div class="form-check">
-              <input name="includeGetSingle" class="form-check-input" type="checkbox" value="" id="get-one" [(ngModel)]="currentEndpoint.endpointActions.includeGetOne">
-              <label class="form-check-label" for="get-one">
-                Get Single Query
-              </label>
-            </div>
-            <div class="form-check">
-              <input name="includeGetMultiple" class="form-check-input" type="checkbox" value="" id="get-multiple" [(ngModel)]="currentEndpoint.endpointActions.includeGetMultiple">
-              <label class="form-check-label" for="get-multiple">
-                Get Multiple Query
-              </label>
-            </div>
-            <div class="form-check">
-              <input name="includePut" class="form-check-input" type="checkbox" value="" id="put" [(ngModel)]="currentEndpoint.endpointActions.includePut">
-              <label class="form-check-label" for="put">
-                Put Action
-              </label>
-            </div>
-            <div class="form-check">
-              <input name="includePost" class="form-check-input" type="checkbox" value="" id="postCheckbox" [(ngModel)]="currentEndpoint.endpointActions.includePost">
-              <label class="form-check-label" for="postCheckbox">
-                Post Action
-              </label>
-            </div>
-            <div class="form-check">
-              <input name="includeDelete" class="form-check-input" type="checkbox" value="" id="deleteCheckbox" [(ngModel)]="currentEndpoint.endpointActions.includeDelete">
-              <label class="form-check-label" for="deleteCheckbox">
-                Delete Action
-              </label>
-            </div>
           </div>
 
           <button [hidden]="formMode !== 'Edit'" (click)="deleteEndpoint()" class="btn btn-danger mt-3">Delete</button>

@@ -1,4 +1,5 @@
-﻿using DarkOrbit.Api.Utilities.Database;
+﻿using System.Collections.Generic;
+using DarkOrbit.Api.Utilities.Database;
 
 namespace DarkOrbit.Api.Processes
 {
@@ -7,5 +8,11 @@ namespace DarkOrbit.Api.Processes
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public List<ProcessStep> Steps { get; set; }
+
+        public List<Input> Inputs { get; set; }
+
+        public List<Output> Outputs { get; set; }
     }
 }
