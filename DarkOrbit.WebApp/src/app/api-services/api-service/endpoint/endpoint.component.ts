@@ -40,8 +40,8 @@ export class EndpointComponent implements OnInit {
           this.notifications.error('Error', 'Endpoint not found.');
           this.router.navigateByUrl('../');
         }
-        if (this.endpoint.endpointMethods.length > 0) {
-          this.firstView = true;
+        if (this.endpoint.endpointMethods.length) {
+          this.firstView = false;
         }
         this.isLoading = false;
       } catch (error) {
@@ -107,6 +107,16 @@ export class EndpointComponent implements OnInit {
   async addDelete() {
     try {
       this.addEndpointMethod('Delete', 'Delete ' + this.endpoint.name);
+      await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
+      this.sendEndpointSavedNotification();
+    } catch (error) {
+      this.sendEndpointErrorNotification();
+    }
+  }
+
+  async deleteMethod(method: EndpointMethod) {
+    try {
+      this.endpoint.endpointMethods = this.endpoint.endpointMethods.filter(m => m.name !== method.name);
       await this.endpointsSvc.ApiEndpointsByIdPut({ entity: this.endpoint, id: this.endpoint.id }).toPromise();
       this.sendEndpointSavedNotification();
     } catch (error) {

@@ -3,7 +3,7 @@
 <div class="page padded toolbar-open">
 
   <!-- Page header -->
-  <header *ngIf="!firstView && !isLoading">
+  <header *ngIf="!firstView">
     <div>
       <h4>{{service?.name}} Service</h4>
       <h1>{{endpoint?.name}} Methods</h1>
@@ -20,7 +20,7 @@
 
   <div class="loader" *ngIf="isLoading"></div>
 
-  <div class="page-info full-width padded no-top-margin flex-column" *ngIf="firstView && !isLoading">
+  <div class="page-info full-width padded no-top-margin flex-column" *ngIf="firstView && !isLoading && !endpoint.endpointMethods.length">
 
     <!-- Add first endpoint -->
     <div class="text-center full-width">
@@ -42,15 +42,15 @@
 
   <div class="page-info full-width padded flex-column method-area" *ngFor="let method of endpoint?.endpointMethods">
 
-    <!-- Header -->
-    <div class="row justify-content-between">
+    <!-- Method Header -->
+    <div class="row justify-content-between method-header">
       <div>
         <span [ngClass]="{'badge-info': method.type === 'Get', 'badge-danger': method.type === 'Delete', 'badge-success': method.type === 'Put' || method.type === 'Post'}"
-          class="badge">{{method.type}}</span>
+          class="badge">{{method.type}}</span> <span class="ml-1">{{method.name}}</span>
       </div>
       <div class="text-right">
         <span class="badge badge-dark dark-path">{{method.subRouteFragments}}</span>
-        <i class="zmdi zmdi-delete"></i>
+        <i (click)="deleteMethod(method)" class="zmdi zmdi-delete" title="Delete {{method.name}}"></i>
       </div>
     </div>
 

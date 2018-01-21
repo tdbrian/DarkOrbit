@@ -1,6 +1,20 @@
+$notHoveredOpacitiy: .6;
+
 .method-area {
   padding: 15px;
   margin-top: 15px;
+}
+
+.method-header {
+  .text-right {
+    i {
+      cursor: pointer;
+      opacity: $notHoveredOpacitiy;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 small {
@@ -11,7 +25,7 @@ small {
   display: flex;
   font-size: 12px;
   justify-content: flex-end;
-  opacity: .6;
+  opacity: $notHoveredOpacitiy;
   cursor: pointer;
   &:hover {
     opacity: 1;
