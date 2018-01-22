@@ -35,7 +35,7 @@ namespace DarkOrbit.Api.Utilities.Go
                 // Write main file
                 await File.WriteAllLinesAsync(mainFilePath, mainFileLines);
 
-                GoCommands.RunGoFileFormatter(mainFilePath);
+                GoCommands.FormatFile(mainFilePath);
             }
         }
 
@@ -104,7 +104,7 @@ namespace DarkOrbit.Api.Utilities.Go
             // Write main file
             await File.WriteAllLinesAsync(mainFilePath, mainFileLines);
 
-            GoCommands.RunGoFileFormatter(mainFilePath);
+            GoCommands.FormatFile(mainFilePath);
         } 
     }
 }

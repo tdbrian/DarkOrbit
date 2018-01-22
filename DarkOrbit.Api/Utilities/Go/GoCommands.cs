@@ -1,23 +1,33 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using CliWrap;
 
 namespace DarkOrbit.Api.Utilities.Go
 {
     public class GoCommands
     {
-        /// <summary>
-        /// Uses go file formatter to correctly format a go file.
-        /// </summary>
-        /// <param name="path">Path to the go file being formatted.</param>
-        public static async void RunGoFileFormatter(string path)
-        {
-            if (!File.Exists(path)) throw new ArgumentException("Argument path does not exist");
+        private const string GoExec = "go.exe";
+        private const string GoFormatterExec = "gofmt.exe";
 
-            using (var cli = new Cli("gofmt.exe"))
+        public static async void FormatFile(string goFilePath)
+        {
+            if (!File.Exists(goFilePath)) throw new ArgumentException("Argument projectPath does not exist");
+
+            using (var cli = new Cli(GoFormatterExec))
             {
-                var output = await cli.ExecuteAsync($"-w {path}");
+                var output = await cli.ExecuteAsync($"-w {goFilePath}");
                 output.ThrowIfError();
+            }
+        }
+
+        public static async Task Build(string projectPath)
+        {
+            if (!Directory.Exists(projectPath)) throw new ArgumentException("Argument projectPath does not exist");
+
+            using (var cli = new Cli(GoExec, projectPath))
+            {
+                await cli.ExecuteAsync("build");
             }
         }
     }

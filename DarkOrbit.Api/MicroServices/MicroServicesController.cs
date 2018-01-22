@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DarkOrbit.Api.Utilities.ApplicationsRunner;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 namespace DarkOrbit.Api.MicroServices
 {
@@ -32,7 +34,9 @@ namespace DarkOrbit.Api.MicroServices
         public async Task Post([FromBody]MicroServiceEntity entity)
         {
             await _microServicesRepo.Create(entity);
-            await _serviceManager.GenerateService(entity);
+            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            Task.Run(() => _serviceManager.GenerateService(entity));
+            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         [HttpPut("{id}")]

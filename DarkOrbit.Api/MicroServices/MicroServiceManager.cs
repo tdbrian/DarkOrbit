@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DarkOrbit.Api.Utilities.ApplicationsRunner;
 using DarkOrbit.Api.Utilities.Go;
 
 namespace DarkOrbit.Api.MicroServices
@@ -15,6 +16,7 @@ namespace DarkOrbit.Api.MicroServices
         public async Task GenerateService(MicroServiceEntity entity)
         {
             await GoServiceGenerator.Generate(companyName, entity);
+            await ApplicationsRunner.Start(companyName, entity);
         }
 
         public async Task DeleteService(MicroServiceEntity entity)
