@@ -29,7 +29,7 @@ namespace DarkOrbit.Api.Utilities.Go
         {
             var normalizedCompanyName = companyName.Kebaberize();
             var goPath = await GetGoEnvironmentPath();
-            var newProjectDir = Path.Combine(goPath, "src", normalizedCompanyName, projectName.Kebaberize());
+            var newProjectDir = Path.Combine(goPath, "src", Constants.appNamePrefix + normalizedCompanyName, projectName.Kebaberize());
             return newProjectDir;
         }
     }
