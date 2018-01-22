@@ -1,3 +1,62 @@
-<p>
-  settings works!
-</p>
+<app-api-services-sidebar></app-api-services-sidebar>
+
+<div class="page centered">
+  <div class="page-content padded">
+
+    <header>
+      <div>
+        <h4>Api Services</h4>
+        <h1>{{service.name}} Settings</h1>
+      </div>
+      <div>
+      </div>
+    </header>
+
+    <form (submit)="update()">
+      <fieldset>
+        <div class="form-group">
+          <label for="name-input">Name</label>
+          <input id="name-input"
+            name="name"
+            type="text"
+            class="form-control"
+            [(ngModel)]="service.name"
+            placeholder="Enter name">
+          <small class="form-text text-muted">
+            Service name may contain spaces and should not contain 'Api' or 'Service'.
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="description-input">Description</label>
+          <textarea id="description-input"
+            name="description"
+            class="form-control"
+            [(ngModel)]="service.description">
+          </textarea>
+          <small class="form-text text-muted">
+            Let other devs and users know what this service does and what it's for.
+          </small>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger mt-2" (click)="deleteStarted = true" *ngIf="!deleteStarted">Delete Service</button>
+          <div *ngIf="deleteStarted">
+            <input id="delete-validation"
+              name="deleteValidation"
+              type="text"
+              class="form-control mt-4"
+              placeholder="Confirm service name to delete..."
+              [(ngModel)]="deleteVerificationValue">
+            <small class="form-text text-muted">
+              You must confirm the name of the <b>{{service.name}}</b> to delete it and all service specific data, processes, and structures. Data backups will remain. This process can not be undone.
+            </small>
+            <button type="button" class="btn btn-danger mt-2" (click)="confirmDelete()">Confirm Delete Service</button>
+            <button type="button" class="btn btn-dark mt-2" (click)="deleteStarted = false; deleteVerificationValue = ''">Cancel Delete</button>
+          </div>
+        </div>
+        <a type="reset" routerLink="../../list" class="btn btn-dark mt-3">Cancel</a>
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+      </fieldset>
+    </form>
+
+  </div>
+</div>
