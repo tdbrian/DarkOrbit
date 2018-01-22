@@ -44,7 +44,9 @@ namespace DarkOrbit.Api.MicroServices
         [HttpDelete("{id}")]
         public async Task Delete(string id)
         {
+            var entity = await _microServicesRepo.GetById(id);
             await _microServicesRepo.Remove(id, "nonamesyet");
+            await _serviceManager.DeleteService(entity);
         }
     }
 }

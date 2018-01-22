@@ -2,65 +2,79 @@
 
 <div class="page padded">
 
-  <!-- Page header -->
-  <header>
-    <div>
-      <h4>Api Services</h4>
-      <h1>All Services List</h1>
-    </div>
-    <div>
-      <a class="btn btn-outline-dark" routerLink="../new" *ngIf="showServices()">
-        <i class="zmdi zmdi-plus-square"></i>
-        New Service
-      </a>
-    </div>
-  </header>
+  <div class="row">
+    <div class="col">
 
-  <!-- Add first service -->
-  <div class="centered">
-    <div class="page-info padded" *ngIf="showFirstInfo()">
-      <div class="text-center">
-        <h3>Looks like you don't have any services yet.
-          <span class="sub">Ready to create the first one?</span>
-        </h3>
-        <a class="btn btn-primary mt-3" routerLink="../new">Create Service</a>
+      <!-- No services -->
+      <div class="page-info full-width padded no-top-margin flex-column">
+
+        <!-- Page header -->
+        <header *ngIf="!firstView">
+          <div>
+            <h4>Api Services</h4>
+            <h1>All Services List</h1>
+          </div>
+          <div>
+            <a class="btn btn-outline-dark" routerLink="../new">
+              <i class="zmdi zmdi-plus-square"></i>
+              New Service
+            </a>
+          </div>
+        </header>
+
+        <div class="loader" *ngIf="isLoading"></div>
+
+        <!-- Add first service -->
+        <div class="text-center full-width" *ngIf="firstView && !isLoading">
+          <h3>Looks like there are aren't any services yet.
+            <br>
+            <span class="sub">Ready to create the first one?</span>
+          </h3>
+          <a class="btn btn-primary mt-3" routerLink="../new">Create Service</a>
+        </div>
+
+        <div class="text-center" *ngIf="services.length === 0 && !firstView && !isLoading">
+          No services yet
+        </div>
+
+        <!-- Services table -->
+        <table class="table" *ngIf="!isLoading && services.length">
+          <thead>
+            <tr>
+              <th width="40">Status</th>
+              <th width="90"></th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Prod Version</th>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let service of services">
+              <td>
+                <i class="zmdi zmdi-lock" title="Admin Locked"></i>
+                <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
+              </td>
+              <td>
+                <a class="btn btn-outline-dark" [routerLink]="getOpenLink(service.id)">Open</a>
+              </td>
+              <td>{{service.name}}
+                <i class="zmdi zmdi-info" [title]="service.description" *ngIf="service.description"></i>
+              </td>
+              <td>{{service.type}}</td>
+              <td>
+                <ng-container *ngIf="service.version">{{service.version}}</ng-container>
+                <ng-container class="muted-text" *ngIf="!service.version">Not in Prod</ng-container>
+              </td>
+              <td>
+                <ng-container *ngIf="service.team">{{service.team}}</ng-container>
+                <ng-container class="muted-text" *ngIf="!service.team">No Team(s) Assigned</ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
       </div>
     </div>
   </div>
-
-  <!-- Services table -->
-  <table class="table" *ngIf="showServices()">
-    <thead>
-      <tr>
-        <th width="40">Status</th>
-        <th width="90"></th>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Prod Version</th>
-        <th>Team</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let service of services">
-        <td>
-          <i class="zmdi zmdi-lock" title="Admin Locked"></i>
-          <i class="zmdi zmdi-pin-assistant" title="User Pinned"></i>
-        </td>
-        <td>
-          <a class="btn btn-outline-dark" [routerLink]="getOpenLink(service.id)">Open</a>
-        </td>
-        <td>{{service.name}} <i class="zmdi zmdi-info" [title]="service.description" *ngIf="service.description"></i></td>
-        <td>{{service.type}}</td>
-        <td>
-          <ng-container *ngIf="service.version">{{service.version}}</ng-container>
-          <ng-container class="muted-text" *ngIf="!service.version">Not in Prod</ng-container>
-        </td>
-        <td>
-          <ng-container *ngIf="service.team">{{service.team}}</ng-container>
-          <ng-container class="muted-text" *ngIf="!service.team">No Team(s) Assigned</ng-container>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
 </div>

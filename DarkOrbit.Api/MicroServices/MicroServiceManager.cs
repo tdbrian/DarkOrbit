@@ -5,6 +5,8 @@ namespace DarkOrbit.Api.MicroServices
 {
     public class MicroServiceManager
     {
+        private const string companyName = "tbrian.darkorbit.io";
+
         /// <summary>
         /// Generates micro-service go application and puts it in the user's
         /// go application directory under dark orbit space for their company.
@@ -12,8 +14,12 @@ namespace DarkOrbit.Api.MicroServices
         /// <param name="entity">The micro-service entity to generate the project.</param>
         public async Task GenerateService(MicroServiceEntity entity)
         {
-            const string companyName = "tbrian.darkorbit.io";
             await GoServiceGenerator.Generate(companyName, entity);
+        }
+
+        public async Task DeleteService(MicroServiceEntity entity)
+        {
+            await GoProjectDeletion.RemoveProject(companyName, entity);
         }
     }
 }
