@@ -8,10 +8,12 @@ namespace DarkOrbit.Api.MicroServices
     public class MicroServicesController : Controller
     {
         private readonly MicroServicesMongo _microServicesRepo;
+        private readonly MicroServiceManager _serviceManager;
 
-        public MicroServicesController(MicroServicesMongo microServicesRepo)
+        public MicroServicesController(MicroServicesMongo microServicesRepo, MicroServiceManager serviceManager)
         {
             _microServicesRepo = microServicesRepo;
+            _serviceManager = serviceManager;
         }
 
         [HttpGet]
@@ -30,6 +32,7 @@ namespace DarkOrbit.Api.MicroServices
         public async Task Post([FromBody]MicroServiceEntity entity)
         {
             await _microServicesRepo.Create(entity);
+            await _serviceManager.GenerateService(entity);
         }
 
         [HttpPut("{id}")]

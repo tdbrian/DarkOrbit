@@ -42,6 +42,7 @@ namespace DarkOrbit.Api
             services.AddTransient<UsersMongo>();
             services.AddTransient<CommandsMongo>();
             services.AddTransient<EventsMongo>();
+            services.AddTransient<MicroServiceManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
