@@ -1,13 +1,12 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using DarkOrbit.Api.MicroServices;
-using DarkOrbit.Api.Utilities.Go;
 
-namespace DarkOrbit.Api.Utilities.WriteOperations
+namespace DarkOrbit.Api.Utilities.Go
 {
-    public class ApplicationFileWriter
+    public class GoServiceGenerator
     {
-        public async Task WriteNewProject(string companyName, MicroServiceEntity entity)
+        public static async Task Generate(string companyName, MicroServiceEntity entity)
         {
             var newProjectDir = await GoFilePaths.GetProjectPath(companyName, entity.Name);
 
@@ -16,7 +15,7 @@ namespace DarkOrbit.Api.Utilities.WriteOperations
                 Directory.CreateDirectory(newProjectDir);
             }
 
-
+            await GoFileGenerator.GenerateMainFile(newProjectDir, "localhost", "3000");
         }
     }
 }

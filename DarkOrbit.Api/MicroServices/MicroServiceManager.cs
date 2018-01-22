@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using DarkOrbit.Api.Utilities.WriteOperations;
+using DarkOrbit.Api.Utilities.Go;
 
 namespace DarkOrbit.Api.MicroServices
 {
@@ -13,8 +13,7 @@ namespace DarkOrbit.Api.MicroServices
         public async Task GenerateService(MicroServiceEntity entity)
         {
             const string companyName = "tbrian.darkorbit.io";
-            var fw = new ApplicationFileWriter();
-            await fw.WriteNewProject(companyName, entity);
+            await GoServiceGenerator.Generate(companyName, entity);
         }
     }
 }
