@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer;
 
 namespace DarkOrbit.Api.Utilities.Go
 {
@@ -24,7 +25,7 @@ namespace DarkOrbit.Api.Utilities.Go
                 var contents = new List<string>
                 {
                     "r := gin.Default()",
-                    //"r.GET(\"/ping\", ping)",
+                    "r.GET(\"/health-check\", healthCheck)",
                     $"r.Run(\"{host}:{port}\")",
                 };
 
@@ -60,12 +61,50 @@ namespace DarkOrbit.Api.Utilities.Go
             return importLines;
         }
 
-        public static List<string> GenerateFunction(string name, List<string> innerLines)
+        public static List<string> GenerateFunction(string name, List<string> innerLines, List<string> args = null)
         {
-            var lines = new List<string> {"func " + name + "() {"};
+            var argumentsString = "()";
+            if (args != null)
+            {
+                argumentsString = "(" + string.Join(", ", args) + ")";
+            }
+
+            var lines = new List<string> {"func " + name + argumentsString + " {"};
             lines = lines.Concat(innerLines).ToList();
             lines.Add("}");
             return lines;
         }
+
+        public static async Task GenerateHealthcheckFile(string projectDirectory, string name)
+        {
+            var mainFilePath = Path.Combine(projectDirectory, $"{name.Kebaberize()}.go");
+            if (File.Exists(mainFilePath)) return;
+            
+            // Package line
+            var mainFileLines = new List<string> { GeneratePackage("main") };
+
+            // Import block
+            var importBlock = GenerateImports(new List<string> { "github.com/gin-gonic/gin" });
+            mainFileLines = mainFileLines.Concat(importBlock).ToList();
+
+            // Arguments
+            var arguments = new List<string> { "c *gin.Context" };
+
+            // Contents
+            var contents = new List<string>
+            {
+                "c.JSON(200, gin.H{",
+                "\"status\": \"running\",",
+                "})"
+            };
+
+            // Main function
+            mainFileLines = mainFileLines.Concat(GenerateFunction("healthCheck", contents, arguments)).ToList();
+
+            // Write main file
+            await File.WriteAllLinesAsync(mainFilePath, mainFileLines);
+
+            GoCommands.RunGoFileFormatter(mainFilePath);
+        } 
     }
 }

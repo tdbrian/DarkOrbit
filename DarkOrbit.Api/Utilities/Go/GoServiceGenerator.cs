@@ -15,6 +15,7 @@ namespace DarkOrbit.Api.Utilities.Go
                 Directory.CreateDirectory(newProjectDir);
             }
 
+            await GoFileGenerator.GenerateHealthcheckFile(newProjectDir, "healthCheck");
             await GoFileGenerator.GenerateMainFile(newProjectDir, "localhost", "3000");
         }
     }
