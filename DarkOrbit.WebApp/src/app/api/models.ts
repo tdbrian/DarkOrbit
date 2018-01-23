@@ -8,4 +8,6 @@ export { ProcessStep } from './models/process-step';
 export { Input } from './models/input';
 export { Output } from './models/output';
 export { ResourceEntity } from './models/resource-entity';
+export { ServiceManagerEntity } from './models/service-manager-entity';
+export { RunningService } from './models/running-service';
 export { UserEntity } from './models/user-entity';

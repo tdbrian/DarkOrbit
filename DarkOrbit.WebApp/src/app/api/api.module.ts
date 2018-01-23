@@ -8,6 +8,7 @@ import { EventsService } from './services/events.service';
 import { MicroServicesService } from './services/micro-services.service';
 import { ProcessesService } from './services/processes.service';
 import { ResourcesService } from './services/resources.service';
+import { ServiceManagerService } from './services/service-manager.service';
 import { UsersService } from './services/users.service';
 
 /**
@@ -29,6 +30,7 @@ import { UsersService } from './services/users.service';
    MicroServicesService,
    ProcessesService,
    ResourcesService,
+   ServiceManagerService,
    UsersService
   ],
 })
