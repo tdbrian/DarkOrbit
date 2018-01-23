@@ -27,6 +27,7 @@ namespace DarkOrbit.Api.Utilities.Go
                     "argsWithoutProg := os.Args[1:]",
                     "r := gin.Default()",
                     "r.GET(\"/health-check\", healthCheck)",
+                    "// Router marker",
                     "runLoc := argsWithoutProg[0]",
                     $"r.Run(runLoc)",
                 };
