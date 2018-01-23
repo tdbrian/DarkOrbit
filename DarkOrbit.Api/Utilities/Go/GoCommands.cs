@@ -27,7 +27,15 @@ namespace DarkOrbit.Api.Utilities.Go
 
             using (var cli = new Cli(GoExec, projectPath))
             {
-                await cli.ExecuteAsync("build");
+                var status = await cli.ExecuteAsync("build");
+                if (status.HasError)
+                {
+                    Console.WriteLine("Go build error occurred:", status.StandardError);
+                }
+                else
+                {
+                    Console.WriteLine($"Build completed at {projectPath}");
+                }
             }
         }
     }

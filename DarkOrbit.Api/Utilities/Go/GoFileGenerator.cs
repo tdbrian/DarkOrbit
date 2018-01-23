@@ -18,15 +18,17 @@ namespace DarkOrbit.Api.Utilities.Go
                 var mainFileLines = new List<string> {GeneratePackage("main")};
 
                 // Import block
-                var importBlock = GenerateImports(new List<string> { "github.com/gin-gonic/gin" });
+                var importBlock = GenerateImports(new List<string> { "github.com/gin-gonic/gin", "os" });
                 mainFileLines = mainFileLines.Concat(importBlock).ToList();
 
                 // Contents
                 var contents = new List<string>
                 {
+                    "argsWithoutProg := os.Args[1:]",
                     "r := gin.Default()",
                     "r.GET(\"/health-check\", healthCheck)",
-                    $"r.Run(\"{host}:{port}\")",
+                    "runLoc := argsWithoutProg[0]",
+                    $"r.Run(runLoc)",
                 };
 
                 // Main function
